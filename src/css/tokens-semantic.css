@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Cena Health — Semantic Color Layer (Cena Color System v2)
+   Source palette: ../../_tokens/generated/palette.css (v2 canon, conventional
+   direction: 50 = lightest, 950 = darkest, single `sand` neutral).
+
+   This file owns the SEMANTIC layer only — it remaps v2 palette families to
+   the brand's semantic token NAMES. Component CSS depends on these names; the
+   raw palette steps behind them moved from stale v1 (inverted scale, `warm`/
+   `ochre`) to v2. Do not hardcode hex here except where noted (no exact v2
+   step exists).
+
+   v1 → v2 migration: 2026-05-25. Replaces src/css/_archive/tokens-color-v1.css.
+   Decision math + brand-eye rationale: Knowledge/Projects/Cena Health/Brand/
+   token-reconciliation-recommendation.md (§4a D2).
+   ========================================================================== */
+
+:root {
+  /* Brand — logo identity (hex-frozen in palette.css; never computed) */
+  --color-brand-anchor:    var(--logo-anchor-dark);  /* #0D322D — "Cena" wordmark */
+  --color-brand-primary:   var(--logo-primary);      /* teal-500 #3a8478 — the mark */
+  --color-brand-secondary: var(--logo-secondary);    /* #52A395 */
+  --color-brand-sage:      var(--logo-sage);          /* #81B983 */
+
+  /* Primary action — interactive teal.
+     v2 teal-700 #1e5149 carries white/sand text at 8.96:1 (AA + AAA).
+     Brand-primary teal-500 #3a8478 (4.54:1) is identity, not interaction. */
+  --color-primary:        var(--color-teal-700);   /* #1e5149 — interactive fill */
+  --color-primary-hover:  var(--color-teal-800);   /* #113933 — darker on press/hover */
+  --color-primary-active: var(--color-teal-800);
+  --color-primary-subtle: var(--color-teal-100);   /* #c6ded8 — tinted fill/selection */
+  --color-on-primary:     var(--color-sand-50);    /* #fbfaf8 — warm-tinted, ~white, AAA on teal-700 (brand rule #1: never pure #fff) */
+
+  /* Text */
+  --color-text-primary:   var(--logo-anchor-dark); /* #0D322D — exact v1 port (was teal-200) */
+  --color-text-secondary: var(--color-sand-700);   /* #5a544e ≈ v1 #5B544C */
+  --color-text-tertiary:  #6B645C;                 /* adjusted — no exact v2 step; v1 value preserved */
+  --color-text-disabled:  var(--color-sand-500);   /* #958e85 = v1 warm-500 exact */
+  --color-text-inverse:   var(--color-sand-50);    /* #fbfaf8 */
+  --color-text-brand:     var(--color-teal-700);   /* #1e5149 — teal accent, AAA on sand-50 */
+
+  /* Surface — warm ground, gentle layering (Warm Ground / Cool Figure).
+     v2 sand compresses v1's three close light steps; see migration note. */
+  --color-surface-page:      var(--color-sand-50);   /* #fbfaf8 — warm ground, hex-identical to v1 */
+  --color-surface-primary:   var(--color-sand-100);  /* #e6e4e0 — card/panel fill */
+  --color-surface-secondary: var(--color-sand-200);  /* #d1cec8 — recessed/hover */
+  --color-surface-teal:      var(--color-teal-50);   /* #e9f5f2 — light teal tint */
+  --color-surface-sage:      var(--color-sage-50);   /* #e7f2e8 — light sage tint */
+  --color-surface-overlay:   oklch(15% 0.025 183 / 60%); /* = v2 teal-950 @ 60% */
+
+  /* Border — warm, visible; shadows last (CLAUDE.md rule #4) */
+  --color-border-default: var(--color-sand-300);   /* #bcb8b1 — slightly stronger than v1 for elevation-via-border */
+  --color-border-strong:  #857E75;                 /* adjusted — no exact v2 step; v1 value preserved */
+  --color-border-brand:   var(--color-teal-500);   /* logo primary */
+  --color-border-focus:   var(--color-teal-500);
+
+  /* Functional — bg(-50) / border(-200) / base(-600) / text(-800) on v2 families.
+     Roles match v1's own @theme convention; values now ride canon steps. */
+  --color-error-bg:     var(--color-red-50);    /* #ffedea */
+  --color-error-border: var(--color-red-200);   /* #eca9a0 */
+  --color-error-base:   var(--color-red-600);   /* #a22f2f */
+  --color-error-text:   var(--color-red-800);   /* #661619 */
+
+  --color-warning-bg:     var(--color-amber-50);   /* #f8f1e3 */
+  --color-warning-border: var(--color-amber-200);  /* #d8c49e */
+  --color-warning-base:   var(--color-amber-600);  /* #8e6a22 */
+  --color-warning-text:   var(--color-amber-800);  /* #593e01 */
+
+  --color-success-bg:     var(--color-green-50);   /* #e5f7eb */
+  --color-success-border: var(--color-green-200);  /* #9fc8ae */
+  --color-success-base:   var(--color-green-600);  /* #1b6e4c */
+  --color-success-text:   var(--color-green-800);  /* #00442c */
+
+  --color-info-bg:     var(--color-cyan-50);    /* #d2f2fa */
+  --color-info-border: var(--color-cyan-200);   /* #8bbbcd */
+  --color-info-base:   var(--color-cyan-600);   /* #17597a */
+  --color-info-text:   var(--color-cyan-800);   /* #003753 */
+
+  /* Shadow base colors — warm-tinted (sand hue ≈ 70) */
+  --shadow-color-on-page:    oklch(45% 0.008 70 / 8%);
+  --shadow-color-on-surface: oklch(45% 0.008 70 / 10%);
+}
+
+/* Legacy fallback for OKLCH-unaware engines (overlay + shadow only;
+   palette.css ships -hex fallbacks for the families themselves). */
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    --color-surface-overlay:   rgba(1, 15, 12, 0.60);
+    --shadow-color-on-page:    rgba(91, 84, 76, 0.08);
+    --shadow-color-on-surface: rgba(91, 84, 76, 0.10);
+  }
+}

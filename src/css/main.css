@@ -12,7 +12,8 @@
    ========================================================================== */
 
 /* 1. Token layers */
-@import "./tokens-color.css";
+@import "../../_tokens/generated/palette.css";  /* Cena Color System v2 — canon palette (18 families, conventional dir) */
+@import "./tokens-semantic.css";                /* v2 semantic layer (brand/primary/text/surface/border/functional) */
 @import "./tokens-typography.css";
 @import "./tokens-spacing.css";
 @import "./tokens-motion.css";

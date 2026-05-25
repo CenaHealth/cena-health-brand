@@ -12,8 +12,8 @@
   .tooltip-content {
     @apply absolute hidden font-sans text-xs font-normal whitespace-nowrap rounded-md pointer-events-none;
     padding: var(--space-1-5) var(--space-3);
-    background-color: var(--color-warm-100);
-    color: var(--color-warm-900);
+    background-color: var(--color-sand-900);
+    color: var(--color-sand-100);
     box-shadow: var(--shadow-md);
     z-index: 50;
     bottom: calc(100% + var(--space-1));

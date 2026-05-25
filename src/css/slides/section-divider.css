@@ -19,7 +19,7 @@
     padding: var(--space-20);
     align-items: center;
     justify-items: center;
-    background: linear-gradient(to right, var(--color-teal-900), var(--color-sage-950));
+    background: linear-gradient(to right, var(--color-teal-100), var(--color-sage-50));
   }
 
   /* Surface variants */

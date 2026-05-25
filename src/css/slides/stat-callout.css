@@ -29,7 +29,7 @@
     height: 50%;
     opacity: 0.04;
     pointer-events: none;
-    color: var(--color-teal-300);
+    color: var(--color-teal-800);
   }
 
   .slide-stat__inner {

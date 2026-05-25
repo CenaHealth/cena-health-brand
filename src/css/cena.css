@@ -3,128 +3,129 @@
    Equivalent of haven-ui's haven.css.
 
    Two responsibilities:
-   1. @theme block: maps Tailwind's neutral utilities to the Cena warm palette
+   1. @theme block: maps Tailwind's neutral utilities to the Cena sand palette
       so bg-gray-*, text-gray-*, border-gray-* etc. use warm values, not cool gray.
    2. :root block: maps Preline's --primary-* variables to the Cena teal scale
       so all Preline interactive components render in the correct brand color.
 
-   VALUES: All values reference tokens already defined in tokens-color.css.
-   Do not hardcode hex values here.
+   VALUES: All values reference v2 palette families (../../_tokens/generated/
+   palette.css) and the semantic layer (tokens-semantic.css). Do not hardcode
+   hex values here.
+
+   v2 migration (2026-05-25): the v1 scale was INVERTED (50=darkest), so this
+   file mapped teal/warm in reverse. v2 is conventional (50=lightest), so the
+   mappings are now DIRECT 1:1 and the `warm-*` family is `sand-*`.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. Tailwind neutral utility remapping
-   Maps gray/neutral/slate/stone/zinc to the Cena warm scale so utility
+   Maps gray/neutral/slate/stone/zinc to the Cena sand scale so utility
    classes like bg-gray-50, text-gray-900, border-neutral-200 etc. resolve
    to warm values throughout the pattern library and app pages.
    -------------------------------------------------------------------------- */
 
 @theme {
-  /* Primary (interactive teal) — maps to Cena's teal scale.
-     Note: Cena's teal scale is inverted (50=darkest, 950=lightest).
-     Tailwind's primary utilities expect 50=lightest, 950=darkest,
-     so we map in reverse order. */
-  --color-primary-50:  var(--color-teal-950);
-  --color-primary-100: var(--color-teal-900);
-  --color-primary-200: var(--color-teal-800);
-  --color-primary-300: var(--color-teal-700);
-  --color-primary-400: var(--color-teal-600);
-  --color-primary-500: var(--color-teal-500);
-  --color-primary-600: var(--color-teal-400);   /* interactive fill */
-  --color-primary-700: var(--color-teal-300);   /* hover */
-  --color-primary-800: var(--color-teal-200);
-  --color-primary-900: var(--color-teal-100);
-  --color-primary-950: var(--color-teal-50);
+  /* Primary (interactive teal) — direct map to v2 teal (conventional dir). */
+  --color-primary-50:  var(--color-teal-50);
+  --color-primary-100: var(--color-teal-100);
+  --color-primary-200: var(--color-teal-200);
+  --color-primary-300: var(--color-teal-300);
+  --color-primary-400: var(--color-teal-400);
+  --color-primary-500: var(--color-teal-500);   /* logo primary */
+  --color-primary-600: var(--color-teal-600);
+  --color-primary-700: var(--color-teal-700);   /* interactive fill #1e5149 */
+  --color-primary-800: var(--color-teal-800);   /* hover/active */
+  --color-primary-900: var(--color-teal-900);
+  --color-primary-950: var(--color-teal-950);
 
-  /* Secondary (warm neutral) — maps to Cena's warm scale.
-     Same inversion: warm-50=darkest, warm-950=lightest. */
-  --color-secondary-50:  var(--color-warm-950);
-  --color-secondary-100: var(--color-warm-900);
-  --color-secondary-200: var(--color-warm-800);
-  --color-secondary-300: var(--color-warm-700);
-  --color-secondary-400: var(--color-warm-600);
-  --color-secondary-500: var(--color-warm-500);
-  --color-secondary-600: var(--color-warm-400);
-  --color-secondary-700: var(--color-warm-300);
-  --color-secondary-800: var(--color-warm-200);
-  --color-secondary-900: var(--color-warm-100);
-  --color-secondary-950: var(--color-warm-50);
+  /* Secondary (warm neutral) — direct map to v2 sand (conventional dir). */
+  --color-secondary-50:  var(--color-sand-50);
+  --color-secondary-100: var(--color-sand-100);
+  --color-secondary-200: var(--color-sand-200);
+  --color-secondary-300: var(--color-sand-300);
+  --color-secondary-400: var(--color-sand-400);
+  --color-secondary-500: var(--color-sand-500);
+  --color-secondary-600: var(--color-sand-600);
+  --color-secondary-700: var(--color-sand-700);
+  --color-secondary-800: var(--color-sand-800);
+  --color-secondary-900: var(--color-sand-900);
+  --color-secondary-950: var(--color-sand-950);
 
-  /* Gray / neutral / slate / stone / zinc — all map to warm scale.
+  /* Gray / neutral / slate / stone / zinc — all map to sand scale.
      Preline and Tailwind utility classes that use these (bg-gray-50,
      text-neutral-700, border-gray-200 etc.) will render warm. */
-  --color-gray-50:    var(--color-warm-950);
-  --color-gray-100:   var(--color-warm-900);
-  --color-gray-200:   var(--color-warm-800);
-  --color-gray-300:   var(--color-warm-700);
-  --color-gray-400:   var(--color-warm-600);
-  --color-gray-500:   var(--color-warm-500);
-  --color-gray-600:   var(--color-warm-400);
-  --color-gray-700:   var(--color-warm-300);
-  --color-gray-800:   var(--color-warm-200);
-  --color-gray-900:   var(--color-warm-100);
-  --color-gray-950:   var(--color-warm-50);
+  --color-gray-50:    var(--color-sand-50);
+  --color-gray-100:   var(--color-sand-100);
+  --color-gray-200:   var(--color-sand-200);
+  --color-gray-300:   var(--color-sand-300);
+  --color-gray-400:   var(--color-sand-400);
+  --color-gray-500:   var(--color-sand-500);
+  --color-gray-600:   var(--color-sand-600);
+  --color-gray-700:   var(--color-sand-700);
+  --color-gray-800:   var(--color-sand-800);
+  --color-gray-900:   var(--color-sand-900);
+  --color-gray-950:   var(--color-sand-950);
 
-  --color-neutral-50:  var(--color-warm-950);
-  --color-neutral-100: var(--color-warm-900);
-  --color-neutral-200: var(--color-warm-800);
-  --color-neutral-300: var(--color-warm-700);
-  --color-neutral-400: var(--color-warm-600);
-  --color-neutral-500: var(--color-warm-500);
-  --color-neutral-600: var(--color-warm-400);
-  --color-neutral-700: var(--color-warm-300);
-  --color-neutral-800: var(--color-warm-200);
-  --color-neutral-900: var(--color-warm-100);
-  --color-neutral-950: var(--color-warm-50);
+  --color-neutral-50:  var(--color-sand-50);
+  --color-neutral-100: var(--color-sand-100);
+  --color-neutral-200: var(--color-sand-200);
+  --color-neutral-300: var(--color-sand-300);
+  --color-neutral-400: var(--color-sand-400);
+  --color-neutral-500: var(--color-sand-500);
+  --color-neutral-600: var(--color-sand-600);
+  --color-neutral-700: var(--color-sand-700);
+  --color-neutral-800: var(--color-sand-800);
+  --color-neutral-900: var(--color-sand-900);
+  --color-neutral-950: var(--color-sand-950);
 
-  --color-slate-50:  var(--color-warm-950);
-  --color-slate-100: var(--color-warm-900);
-  --color-slate-200: var(--color-warm-800);
-  --color-slate-300: var(--color-warm-700);
-  --color-slate-400: var(--color-warm-600);
-  --color-slate-500: var(--color-warm-500);
-  --color-slate-600: var(--color-warm-400);
-  --color-slate-700: var(--color-warm-300);
-  --color-slate-800: var(--color-warm-200);
-  --color-slate-900: var(--color-warm-100);
-  --color-slate-950: var(--color-warm-50);
+  --color-slate-50:  var(--color-sand-50);
+  --color-slate-100: var(--color-sand-100);
+  --color-slate-200: var(--color-sand-200);
+  --color-slate-300: var(--color-sand-300);
+  --color-slate-400: var(--color-sand-400);
+  --color-slate-500: var(--color-sand-500);
+  --color-slate-600: var(--color-sand-600);
+  --color-slate-700: var(--color-sand-700);
+  --color-slate-800: var(--color-sand-800);
+  --color-slate-900: var(--color-sand-900);
+  --color-slate-950: var(--color-sand-950);
 
-  --color-stone-50:  var(--color-warm-950);
-  --color-stone-100: var(--color-warm-900);
-  --color-stone-200: var(--color-warm-800);
-  --color-stone-300: var(--color-warm-700);
-  --color-stone-400: var(--color-warm-600);
-  --color-stone-500: var(--color-warm-500);
-  --color-stone-600: var(--color-warm-400);
-  --color-stone-700: var(--color-warm-300);
-  --color-stone-800: var(--color-warm-200);
-  --color-stone-900: var(--color-warm-100);
-  --color-stone-950: var(--color-warm-50);
+  --color-stone-50:  var(--color-sand-50);
+  --color-stone-100: var(--color-sand-100);
+  --color-stone-200: var(--color-sand-200);
+  --color-stone-300: var(--color-sand-300);
+  --color-stone-400: var(--color-sand-400);
+  --color-stone-500: var(--color-sand-500);
+  --color-stone-600: var(--color-sand-600);
+  --color-stone-700: var(--color-sand-700);
+  --color-stone-800: var(--color-sand-800);
+  --color-stone-900: var(--color-sand-900);
+  --color-stone-950: var(--color-sand-950);
 
-  --color-zinc-50:  var(--color-warm-950);
-  --color-zinc-100: var(--color-warm-900);
-  --color-zinc-200: var(--color-warm-800);
-  --color-zinc-300: var(--color-warm-700);
-  --color-zinc-400: var(--color-warm-600);
-  --color-zinc-500: var(--color-warm-500);
-  --color-zinc-600: var(--color-warm-400);
-  --color-zinc-700: var(--color-warm-300);
-  --color-zinc-800: var(--color-warm-200);
-  --color-zinc-900: var(--color-warm-100);
-  --color-zinc-950: var(--color-warm-50);
+  --color-zinc-50:  var(--color-sand-50);
+  --color-zinc-100: var(--color-sand-100);
+  --color-zinc-200: var(--color-sand-200);
+  --color-zinc-300: var(--color-sand-300);
+  --color-zinc-400: var(--color-sand-400);
+  --color-zinc-500: var(--color-sand-500);
+  --color-zinc-600: var(--color-sand-600);
+  --color-zinc-700: var(--color-sand-700);
+  --color-zinc-800: var(--color-sand-800);
+  --color-zinc-900: var(--color-sand-900);
+  --color-zinc-950: var(--color-sand-950);
 
   /* White / black — safety net: even accidental bg-white is warm */
-  --color-white: var(--color-warm-950);   /* warm off-white, not pure #fff */
-  --color-black: var(--color-warm-50);    /* near-black */
+  --color-white: var(--color-sand-50);    /* warm off-white, not pure #fff */
+  --color-black: var(--color-sand-950);   /* near-black */
 
   /* Semantic surface utilities — prefer these over bg-white/bg-gray-* */
-  --color-surface-page:      var(--color-warm-950);  /* #FBFAF8 — page background */
-  --color-surface-primary:   var(--color-warm-900);  /* #F3F1EE — card/panel fill */
-  --color-surface-secondary: var(--color-warm-800);  /* #E7E4DF — recessed/hover */
+  --color-surface-page:      var(--color-sand-50);   /* #fbfaf8 — page background */
+  --color-surface-primary:   var(--color-sand-100);  /* #e6e4e0 — card/panel fill */
+  --color-surface-secondary: var(--color-sand-200);  /* #d1cec8 — recessed/hover */
 
   /* Feedback — success, error, warning, info.
      Maps semantic *-50 (light bg) through *-900 (dark text) to the
-     Cena functional color families for @apply usage. */
+     Cena functional semantic tokens (now v2 family steps) for @apply usage. */
   --color-success-50:  var(--color-success-bg);
   --color-success-200: var(--color-success-border);
   --color-success-600: var(--color-success-base);
@@ -238,7 +239,7 @@
    -------------------------------------------------------------------------- */
 
 :root {
-  /* Primary action — Cena teal-400 (#1B685E) */
+  /* Primary action — Cena teal-700 (#1e5149) interactive fill */
   --primary-50:  var(--color-primary-50);
   --primary-100: var(--color-primary-100);
   --primary-200: var(--color-primary-200);
@@ -251,37 +252,37 @@
   --primary-900: var(--color-primary-900);
   --primary-950: var(--color-primary-950);
 
-  --primary:          var(--color-primary-600);
-  --primary-hover:    var(--color-primary-700);
-  --primary-focus:    var(--color-primary-700);
-  --primary-active:   var(--color-primary-700);
-  --primary-checked:  var(--color-primary-600);
-  --primary-foreground: var(--color-warm-950);
+  --primary:          var(--color-primary-700);   /* teal-700 #1e5149 */
+  --primary-hover:    var(--color-primary-800);
+  --primary-focus:    var(--color-primary-800);
+  --primary-active:   var(--color-primary-800);
+  --primary-checked:  var(--color-primary-700);
+  --primary-foreground: var(--color-sand-50);
   --primary-line:     transparent;
 
   /* Sidebar — warm light surfaces */
-  --sidebar:               var(--color-warm-950);
-  --sidebar-line:          var(--color-warm-700);
-  --sidebar-divider:       var(--color-warm-700);
-  --sidebar-nav-foreground: var(--color-warm-300);
-  --sidebar-nav-hover:     var(--color-warm-800);
-  --sidebar-nav-focus:     var(--color-warm-800);
-  --sidebar-nav-active:    var(--color-warm-800);
-  --sidebar-inverse:       var(--color-teal-50);
+  --sidebar:               var(--color-sand-50);
+  --sidebar-line:          var(--color-sand-300);
+  --sidebar-divider:       var(--color-sand-300);
+  --sidebar-nav-foreground: var(--color-sand-700);
+  --sidebar-nav-hover:     var(--color-sand-200);
+  --sidebar-nav-focus:     var(--color-sand-200);
+  --sidebar-nav-active:    var(--color-sand-200);
+  --sidebar-inverse:       var(--color-teal-950);
 
   /* Layer hover states (used by Preline dropdowns, lists) */
-  --layer-hover:  var(--color-warm-900);
-  --layer-focus:  var(--color-warm-900);
-  --layer-active: var(--color-warm-900);
+  --layer-hover:  var(--color-sand-100);
+  --layer-focus:  var(--color-sand-100);
+  --layer-active: var(--color-sand-100);
 
   /* Muted hover states */
-  --muted-hover:  var(--color-warm-800);
-  --muted-focus:  var(--color-warm-800);
-  --muted-active: var(--color-warm-800);
+  --muted-hover:  var(--color-sand-200);
+  --muted-focus:  var(--color-sand-200);
+  --muted-active: var(--color-sand-200);
 
   /* Destructive */
   --destructive:            var(--color-error-base);
-  --destructive-foreground: var(--color-warm-950);
+  --destructive-foreground: var(--color-sand-50);
   --destructive-hover:      var(--color-error-text);
   --destructive-focus:      var(--color-error-text);
 }

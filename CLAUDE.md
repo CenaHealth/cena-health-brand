@@ -9,8 +9,8 @@ Read this file completely before touching any file in this project.
 **1. Background is `#FBFAF8` (`var(--color-surface-page)`), never `#ffffff` or `white`.**
 The warm off-white is the entire warmth mechanism. Using pure white breaks it.
 
-**2. Interactive fill is `color-primary` (teal-400, `#1B685E`), not `color-brand-primary` (teal-500, `#3A8478`).**
-Teal-500 fails WCAG AA with light text. Use `var(--color-primary)` for buttons and interactive states.
+**2. Interactive fill is `color-primary` (teal-700, `#1e5149`), not `color-brand-primary` (teal-500, `#3A8478`).**
+Teal-500 (4.54:1) fails the brand's WCAG bar with light text; teal-700 clears AAA (8.96:1). Use `var(--color-primary)` for buttons and interactive states. (Cena Color System v2 — conventional scale, so the dark interactive teal is teal-700, not v1's inverted teal-400.)
 
 **3. All component values use semantic CSS custom properties, never raw hex or hardcoded pixels.**
 Write `var(--color-text-primary)`, `var(--space-4)`, `var(--radius-md)` — not `#0D322D`, `16px`, `8px`.
@@ -213,7 +213,7 @@ All placeholder text comes from `.project-docs/dummy-copy.md`. Do not invent nam
 ## Where to find the full system
 
 - Brand brief: `_brief/brand-brief.md`
-- Color tokens spec: `_tokens/color.md` and `src/css/tokens-color.css`
+- Color tokens: `_tokens/generated/palette.css` (Cena Color System v2 canon — 18 families, conventional scale, `sand` neutral) + `src/css/tokens-semantic.css` (semantic layer). v1 retired to `src/css/_archive/tokens-color-v1.css` (do not consume). Migration rationale: `Knowledge/Projects/Cena Health/Brand/token-reconciliation-recommendation.md`
 - Typography spec: `_tokens/typography.md` and `src/css/tokens-typography.css`
 - Spacing spec: `_tokens/spacing.md` and `src/css/tokens-spacing.css`
 - Motion spec: `_tokens/motion.md` and `src/css/tokens-motion.css`

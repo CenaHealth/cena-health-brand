@@ -44,15 +44,15 @@
   }
 
   .slide-data--dark .slide-data__subtitle {
-    color: var(--color-warm-600);
+    color: var(--color-sand-400);
   }
 
   .slide-data--dark .slide-data__source {
-    color: var(--color-warm-600);
+    color: var(--color-sand-400);
   }
 
   .slide-data--dark .slide-data__insight {
-    background-color: var(--color-teal-800);
+    background-color: var(--color-teal-200);
     color: var(--color-text-inverse);
     box-shadow: none;
   }

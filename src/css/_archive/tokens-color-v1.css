@@ -1,5 +1,15 @@
 /* ==========================================================================
-   Cena Health — Color Tokens
+   ⚠️ RETIRED — Cena Color System v1 (stale). DO NOT CONSUME.
+   Superseded 2026-05-25 by Cena Color System v2:
+     - palette:  ../../_tokens/generated/palette.css  (canon, conventional dir)
+     - semantic: ../tokens-semantic.css
+   Kept for history only. v1 used an INVERTED scale (50=darkest) and the
+   `warm`/`ochre` families, both replaced in v2 (`sand`; 18 Tailwind-hue families).
+   Nothing imports this file. Migration rationale: Knowledge/Projects/Cena
+   Health/Brand/token-reconciliation-recommendation.md.
+   ==========================================================================
+
+   Cena Health — Color Tokens (v1)
    Source: _tokens/color-web.md
    ========================================================================== */
 

@@ -38,7 +38,7 @@
 
   .app-sidebar::-webkit-scrollbar-thumb {
     @apply rounded-full;
-    background-color: var(--color-warm-600);
+    background-color: var(--color-sand-400);
   }
 
   .app-sidebar::-webkit-scrollbar-track {
