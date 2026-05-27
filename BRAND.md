@@ -184,6 +184,10 @@ Full spec: `visual-language/imagery.md`
 
 Elevation via surface color layering, not drop shadows. Shadows only for Level 4+ (floating: modals, dropdowns, toasts). Full token set and use rules: `visual-language/surface-treatment.md`
 
+### 8.5 Document & Spreadsheet Emission
+
+How the brand renders when exported to Google Docs/Sheets for partners (the `/share` pipeline). Display Lora + body Source Sans 3; text ink `#0D322D`, accent/table-header teal-700 `#1e5149`, borders sand-300. Contrast rule: white text only on dark fills, ink on light. Full spec (doc + spreadsheet treatment): `visual-language/document-emission.md`
+
 ---
 
 ## 9. Component System
