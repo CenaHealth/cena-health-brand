@@ -469,3 +469,344 @@ Arguments against:
 **My recommendation:** ship with sand-600 + uppercase, validate on first regenerate. If Aaron prefers the prior teal-700 treatment, the revert is changing two values in `CENA_THEME["heading_colors"][3]` and `CENA_THEME["heading_sizes"][3]` back to `#1e5149` and `Pt(12)`, and removing the `"heading_caps"` key. Five minutes.
 
 Everything else in the fix list is uncontroversial: Title/Subtitle defensive theming, body line 1.55, table cell padding, heading space-before tuning, page margins. Those land on regenerate.
+
+---
+
+## 12. Iteration 3 — visual review of the rendered SoP (2026-05-28 evening)
+
+Aaron rendered `sop-review-and-approval.docx` in Google Drive after iteration 2 landed and surfaced five visual issues. This section documents the fixes; the iteration 2 spec above is preserved as canonical for what landed first. Where iteration 3 overrides iteration 2, the override is named explicitly.
+
+### 12.1 H1 / H2 color: teal-ink `#0D322D` → sand-900 `#25211d`
+
+- **What Aaron read.** The H1 title "Reviewing and approving a Cena SoP" rendered in teal-ink `#0D322D` reads as too teal-feeling for a clinical document title. The teal-ink IS a brand-anchor color (Lora at the wordmark tone), but on the Google Docs surface — where Google Docs subtly cools the rendering vs. on-brand HTML — it edges toward "clinical-product teal" rather than "warm document authority."
+- **What fidelity asks for.** A title color that reads as warm-dark Lora without picking up the brand's interactive register. Sand-900 (`#25211d`) is the deepest warm neutral in the v2 palette — visibly warm-toned without being saturated, near-black contrast on the warm page ground.
+- **Override of iteration 2.** Iteration 2 set H1 + H2 + Title to `#0D322D` (text-primary). Iteration 3 moves H1, H2, and Title to sand-900 `#25211d`. H3 stays at sand-600 (eyebrow register, unchanged). H4 stays at sand-700 (unchanged). The body text stays at `#0D322D` — text-primary is correct as the running-prose color (Lora wordmark register at body weight). The change applies *only* to display-register elements (Title + H1 + H2), where Lora visually carries the title-as-authority reading and sand-900 expresses the brand's warm-dark authority without dragging in teal.
+- **Rationale (brand).** Principle 6 (restraint as default) — when teal feels like it's overstaying, the move is to retreat to the warm neutral that the rest of the document leans into. Principle 3 (warm ground, cool figure) — sand-900 IS warm-figure, where teal-ink is cool-figure. A Lora H1 in sand-900 on the warm page is the "warm document" reading; a Lora H1 in teal-ink is the "brand teal calling for attention" reading. The first is right for a clinical SoP; the second is right for a deck slide title or hero copy. (This is also why deck-mode H1 still uses teal — different register, same brand.)
+- **Hierarchy consistency.** Moving H1 to sand-900 and leaving H2 at teal-ink would split the hierarchy across two color families and read as inconsistent. Moving both keeps the display register coherent. Body text remains text-primary `#0D322D`; the color shift is *only* at the display end (H1/H2/Title).
+- **Honest limit.** The hex `#25211d` is dark enough to clear AAA contrast on the warm ground (~17:1) — accessibility holds. If Aaron's first regenerate reads sand-900 as too far from teal-ink (loss of brand teal at the display level), the revert is one-line: change `heading_colors[1]` and `[2]` back to `#0D322D`. Mark as deferred-revert if it lands wrong.
+
+### 12.2 Body line-spacing: 1.55 → 1.4
+
+- **What Aaron read.** Body line-spacing 1.55 reads as overcooked at the docx surface — paragraphs look airy in a way that drains the page's density and pushes the reading toward "tired" rather than "open."
+- **What fidelity asks for.** A line-height that preserves health-equity readability without producing the inflated feel Aaron flagged. The brand's canonical 1.55 (`typography.md` §3.2.1) is grounded in patient-facing low-literacy reading on screen at 16px body. The docx surface (Google Docs default zoom = ~100% on an 11pt body), combined with paragraph-after spacing the web layer doesn't have, compounds the line-height into something the brand spec didn't anticipate. The brand's `leading-relaxed` web equivalent (1.625) is the same: web layouts get away with more line-height because they don't carry the paragraph-after stack docx imposes.
+- **Override of iteration 2.** Iteration 2 set `body_line_spacing: 1.55` (brand canonical). Iteration 3 reduces to **1.4**. Rationale: the docx surface needs the tighter setting to land at a *perceived* line-height equivalent to the brand's 1.55-at-web. The substrate compresses line + para-after into one visual rhythm; reducing line-height compensates without removing the paragraph-after's role in section breathing. This is the explicit cross-surface tuning the rule "spacing carries the rhythm" already implied — the *value* is surface-specific; the *intent* (generous reading rhythm) is brand-canonical.
+- **What we are NOT doing.** Holding the canonical 1.55 and arguing back. The brand discipline says spec-fidelity at the level of *visual experience*, not at the level of *number on the page*. Aaron's read is the visual-experience signal; the number adjusts to deliver it.
+- **Brand spec amendment recommendation (deferred).** `typography.md` §3.2.1 could carry a per-surface footnote: "On docx surfaces (Google Docs / Word), use 1.4 to compensate for paragraph-spacing stack; the perceived rhythm matches web's 1.55." Not authoring that edit in this spec — it's typography spec's territory and warrants a separate review pass.
+- **Honest limit.** 1.4 is the recommended value, validated against Aaron's read. If after regenerate it reads tight (less likely than the inflated state), the next move is 1.45. If it reads still slightly inflated, drop to 1.35. The variable lives at `CENA_THEME["body_line_spacing"]`.
+
+### 12.3 Callout internal padding (text tight to top of shaded box)
+
+- **What Aaron read.** The `:::callout-warning` block's text starts flush against the top of the amber-50 background — no perceptible internal top padding. Same true for the bottom. The shading paints the line-box only, so the colored rectangle hugs the text rows. The block reads as "text crammed into a tinted rectangle" rather than "padded callout."
+- **The mechanism.** In OOXML, paragraph shading (`w:shd`) paints the *paragraph's content region*. `w:spacing` `w:before` and `w:after` create space OUTSIDE the shaded region (between adjacent paragraphs). There is no native `padding` on a paragraph. BUT — and this is the key — when a paragraph also has `w:pBdr` (paragraph borders), the shading extends to fill the *border-bounded region*, AND each border's `w:space` attribute creates clearance between that border and the text inside. So invisible (or near-invisible) top and bottom borders with `w:space="N"` produce **visible internal top/bottom padding inside the shaded box.** Tested by inspecting Word's own behavior with `w:pBdr` + `w:shd`; Google Docs respects this on import.
+- **Implementation.** Extend `apply_directive_styles()` so that when a directive has `bg_color`, it auto-emits `w:top` and `w:bottom` borders with the following discipline:
+  - Default: `w:val="single" w:sz="2" w:color="auto"` (a hairline border — `sz="2"` is the smallest visible width; rendered at ~0.25pt). In Google Docs the hairline reads as a barely-perceptible frame edge, which actually *helps* the callout register as a discrete block.
+  - Optionally hide the top/bottom border by setting it to match the bg color (the border becomes invisible against the background), if the directive doesn't want any frame at all. Default to hairline-visible.
+  - `w:space="120"` twips (~6pt) — this is the internal padding distance. Six points top + six points bottom = perceptibly padded without the block becoming an oversized banner. Tunable per-directive via `bg_padding_v` key.
+- **Alternative considered (rejected).** Rendering each callout as a single-cell table is architecturally cleaner — tables have explicit cell margins. But it requires the directive handler in `surface-emit/handlers.mjs` to emit a table wrapper, which is a markdown-source pipeline change beyond this iteration's brand-style scope. Flag as Open Issue #7 for if Aaron wants a deeper structural fix later.
+- **Rationale (brand).** Principle 3 (warm ground, cool figure) — a callout's bg shading IS the warm-figure moment; cramming text against its edges undermines the "warm figure" register the shading exists to deliver. Internal padding lets the bg color *breathe around the text*, which is what makes a callout read as a settled paragraph-as-block rather than a highlighted-line.
+- **Honest limit.** Word renders this faithfully. Google Docs in my read renders it faithfully too, but the round-trip behavior (suggesting-mode edits → download as docx) may strip the hairline borders if Google Docs doesn't recognize the auto-color. Recommend ship; verify on first review pass. If Marrero's edits in Google Docs preserve the styled callouts after download, we're done; if not, the fallback is to set the top/bottom borders to match the bg color explicitly (so even if they survive round-trip, they're invisible).
+
+### 12.4 Text color on surface families — sand-900 across directives with backgrounds
+
+- **What Aaron read.** Every directive currently inherits `body_color` `#0D322D` (text-primary / teal-ink) for its text. On a yellow (amber-50) background, dark teal text mismatches the surface family — the eye reads "teal ink in an amber rectangle," not "amber-family content on amber-family surface." Same pattern across cyan, green, red, sand-bg directives — all inherit teal-ink, all mismatch their surface family.
+- **What fidelity asks for.** Brand discipline (Aaron, this turn): text on a colored surface uses a color from the same family OR from the neutral sand family — never the teal-ink family that mismatches.
+- **The choice per directive.** Two plausible answers per directive: family-match (e.g., callout-warning gets amber-900) or sand-neutral (e.g., callout-warning gets sand-900). I'm choosing **sand-900 (`#25211d`) across the board for every directive with a bg_color.** Rationale:
+  1. **Consistency.** One text color across all directives keeps the family vocabulary readable as a system rather than a per-block color invention.
+  2. **Restraint.** Family-match colors (amber-900 = `#412900`, green-900 = `#00301d`, red-900 = `#4a0a0e`, cyan-900 = `#002740`) ARE warm-darks per family — but they introduce a 4-color text vocabulary across the callout family that adds chrome the brand doesn't need. Sand-900 is the warm-darkest neutral; it sits inside every family's complement and reads as "warm authority on warm surface" universally.
+  3. **Aaron's instinct in the rule statement.** "Sand OR a color from the family." When two valid options exist for the same discipline, restraint chooses the one that produces less variation. Sand-900 is that choice.
+  4. **The "grew, not built" test.** A callout family where every text color is the same warm neutral feels like the document's own register varying its background; a callout family where each callout has a different text color feels like a graphic system layered on top.
+- **Per-directive assignments (all sand-900 unless noted).**
+  - `callout-info` (cyan-50 bg) → text sand-900 `#25211d`
+  - `callout-warning` (amber-50 bg) → text sand-900
+  - `callout-success` (green-50 bg) → text sand-900
+  - `callout-error` (red-50 bg) → text sand-900
+  - `card`, `card-body` (sand-50 bg) → text sand-900 (sand on sand — already feels right, makes explicit)
+  - `card-title` (sand-50 bg) → keep teal-700 (this is the document's interactive register at the card-title level; family-match would lose the section-label reading the iteration-1 spec named). **Exception to the rule; documented inline.**
+  - `attestation`, `attestation-gate` (sand-100 bg) → text sand-900
+  - `escalation` (sand-50 bg) → text sand-900
+  - `decision-branch` (sand-50 bg) → text sand-900
+  - `screen-ref` (character style, no bg) → no change — keep teal-700 (inline interactive/wayfinding register, correct as-is)
+  - `glossary-term`, `glossary-def` (no bg) → no change — inherit body
+- **Why card-title stays teal-700.** The card-title is functionally a heading inside a container. The brand-discipline rule applies to *body text on a surface*; a heading is a different register with its own color logic (the section-label register, which IS teal-700 in the brand). The card-title is the one place where the rule reaches its natural carve-out. Document and proceed.
+- **Rationale (brand).** Cena's brand favors **one warm-dark text color** running through the document's working voice, with teal punctuating *interactive moments* (card-title is title-of-a-named-block — borderline, kept) and *body color* punctuating running prose. Multiple text colors per directive would atomize the brand vocabulary; sand-900 unifies it.
+- **Honest limit.** This is opinionated. If Aaron prefers family-match (cyan-900 on cyan, amber-900 on amber, etc.) after seeing the regenerate, the revert is per-directive `color:` swaps — five-minute change. Surface this in §12.7 as the single decision Aaron should validate against the rendered output.
+
+### 12.5 Scope kv-table separation
+
+- **What Aaron read.** In the Scope section's kv-table, label cells like "For" feel far from their body content. Eye travel from label to body is noticeable.
+- **Diagnosis.** The Scope table is rendered as a pipe-table by pandoc → `<w:tbl>` with the `Table` style. Both label and body cells top-align by default (correct — Word has no `vAlign` on cells without explicit `tcPr`). Cell margins are top/bottom 60 twips (~3pt — iteration 2's addition) + Compact paragraph style with space-after Pt(4) and line-spacing 1.4. The label cell is one line of "For" + cell margins + paragraph space-after = ~24pt of content area; the body cell wraps to 2–3 lines = ~70–90pt of content area. Top-aligned, the label sits at row top with the body cell's wrapped content trailing below — the row stretches to the taller cell, leaving visible empty space below the label *inside the same row*. The reading: label is isolated at the top, body trails below in the next column.
+- **Why it's not a styling bug exactly.** Top-alignment is correct (the label and the first line of body text DO read aligned). The "separation" Aaron sees comes from row-height-following-tallest-cell + multi-line body wrapping. This is a pipe-table-as-kv-table architectural limit.
+- **What this iteration can do.** Reduce the table cell vertical margin from 60 twips → **30 twips (~1.5pt)**. Rationale: in iteration 2 I added 60 twips because tables felt cramped without any vertical breathing room; in iteration 3 Aaron's signal is that 60-twip vertical margin compounds with `Compact`'s Pt(4) space-after to make label cells visually padded-bottom (empty cell space below "For"). Cutting cell margin in half reduces that bottom-empty-space without removing the breathing entirely.
+- **What this iteration CANNOT cleanly do.** Per-cell margin differentiation (label gets margin=0, body keeps 30 twips) requires either per-cell `w:tcPr/w:tcMar` overrides at table-emission time (markdown-source pipeline change) or a dedicated `KvTableCompact` paragraph style + a custom Table style with `tblStylePr` first-column override (architectural addition). Both are beyond this iteration's brand-style scope. Surface as Open Issue #8.
+- **The deeper structural fix (Open Issue #8).** Pipe tables are wrong for kv-tables. Definition lists (markdown `Term : Definition`) render in pandoc-docx as dedicated `Definition Term` + `Definition` styles which can be themed independently — a label-then-body register without the row-height/cell-margin coupling. If the SoP markdown source emits kv-tables as definition lists instead, the separation issue disappears at the substrate level. This is markdown-source surgery, not a docx-theme fix; surface to the surface-emit handler owner as a separate recommendation.
+- **Rationale (brand).** Principle 6 (restraint as default) — when the substrate constrains visual fidelity beyond what theming can solve, the move is to ship the most-restrained-possible substrate fix and surface the structural fix as an issue, not to over-theme around the limit. Halving the cell margin is the restrained fix; the deeper change is structural.
+- **Honest limit.** The 30-twip cell margin may still read as visibly looser than the SoT-site kv-table. The structural fix at the markdown-source layer is the only path to full SoT-site fidelity. Name it; don't paper over it.
+
+### 12.6 Drop-in code (iteration 3)
+
+Three changes layered on top of iteration 2's `apply_theme()` + `apply_directive_styles()` + `CENA_THEME`. Apply in order.
+
+#### 12.6.1 Update `CENA_THEME` color + line-spacing values
+
+In the `CENA_THEME` dict — change the values shown, leave everything else alone:
+
+```python
+    # --- HEADING COLORS: H1 + H2 to sand-900 (warm-dark Lora authority);
+    #     H3 stays sand-600 (eyebrow); H4 stays sand-700. Body color is
+    #     unchanged (text-primary teal-ink for running prose). Iteration 3
+    #     override of iteration 2's H1/H2 = #0D322D.
+    "heading_colors": {
+        1: hex_to_rgb("#25211d"),  # sand-900 — warm-dark Lora authority
+        2: hex_to_rgb("#25211d"),  # sand-900 — hierarchy stays in one family
+        3: hex_to_rgb("#777069"),  # sand-600 — eyebrow/subsection register (unchanged)
+        4: hex_to_rgb("#5a544e"),  # sand-700 — recedes (unchanged)
+    },
+
+    # --- TITLE: also shifts to sand-900 for hierarchy consistency
+    "title_color": hex_to_rgb("#25211d"),  # sand-900 (was inheriting heading_colors[1])
+
+    # --- BODY LINE-SPACING: 1.55 → 1.4 (iteration 3 override of iteration 2).
+    #     1.55 is brand canonical at the web surface; the docx substrate
+    #     compounds line-height with paragraph-after spacing, producing a
+    #     perceived rhythm looser than the canonical intent. 1.4 lands at
+    #     web-1.55-equivalent perceived rhythm on docx.
+    "body_line_spacing": 1.4,    # was 1.55
+
+    # --- TABLE CELL MARGIN: 60 → 30 twips top/bottom (iteration 3 override of
+    #     iteration 2). Iteration 2 added 60 twips to give tables breathing
+    #     room; iteration 3 cuts in half because compounding with Compact's
+    #     Pt(4) space-after produced visible empty space below short label
+    #     cells in kv-tables.
+    "table_cell_margin_v": 30,   # was 60
+    "table_cell_margin_h": 108,  # unchanged
+```
+
+#### 12.6.2 Extend `apply_theme()` to honor `title_color`
+
+**In `apply_theme()`, replace** the line:
+
+```python
+        title_style.font.color.rgb = theme["heading_colors"].get(1, theme["body_color"])
+```
+
+**with**:
+
+```python
+        title_style.font.color.rgb = theme.get(
+            "title_color", theme["heading_colors"].get(1, theme["body_color"])
+        )
+```
+
+Rationale: title color now defaults to heading_colors[1] (sand-900 after this iteration) but can be overridden per theme without coupling to heading-1 color downstream.
+
+#### 12.6.3 Extend `apply_directive_styles()` for internal padding + text colors
+
+**Add this helper at module level (top of file, after imports)**:
+
+```python
+SAND_900 = "#25211d"  # warm-dark text color for directive surfaces
+```
+
+**Replace the entire `apply_directive_styles()` function body** with the version below. The changes:
+1. Adds auto top/bottom hairline borders when `bg_color` is present, with `w:space` for internal padding (item 12.3).
+2. Defaults text color to sand-900 when `bg_color` is present (item 12.4) — directive's explicit `color` key overrides.
+3. Preserves all existing behavior (left border via `border_color`, indent, shading, character styles).
+
+```python
+def apply_directive_styles(doc: Document, theme: dict):
+    """Add haven-directive styles. Only runs if theme defines them.
+
+    Each entry in theme["directive_styles"] adds a Word style named after the
+    directive class (e.g., "callout-warning", "screen-ref"). Pandoc maps a
+    fenced div's class name to a paragraph style and a bracketed-span's class
+    to a character style of the same name.
+
+    Per-directive keys:
+      style_type   "paragraph" (default) or "character"
+      font, size, color, bold        — both types
+      space_before, space_after      — paragraph only
+      border_color                   — paragraph only; single left rule, auto
+                                       240-twip indent unless "indent" overrides
+      bg_color                       — paragraph only; paragraph shading; auto-
+                                       emits top/bottom hairline borders with
+                                       w:space for internal vertical padding
+      bg_padding_v                   — paragraph only; internal vertical
+                                       padding in twips (default 120 = ~6pt)
+      bg_text_color                  — paragraph only; text color when bg
+                                       present; default sand-900 #25211d
+      indent                         — paragraph only; left indent in twips
+                                       (independent of border)
+    """
+    if "directive_styles" not in theme:
+        return
+
+    from docx.enum.style import WD_STYLE_TYPE
+
+    for style_name, props in theme["directive_styles"].items():
+        style_type = props.get("style_type", "paragraph")
+
+        if style_type == "character":
+            try:
+                style = doc.styles.add_style(style_name, WD_STYLE_TYPE.CHARACTER)
+            except ValueError:
+                style = doc.styles[style_name]
+            font = style.font
+            if "font" in props:
+                font.name = props["font"]
+            if "size" in props:
+                font.size = props["size"]
+            if "color" in props:
+                font.color.rgb = props["color"]
+            if props.get("bold"):
+                font.bold = True
+            continue
+
+        try:
+            style = doc.styles.add_style(style_name, WD_STYLE_TYPE.PARAGRAPH)
+        except ValueError:
+            style = doc.styles[style_name]
+
+        style.base_style = doc.styles["Normal"]
+
+        font = style.font
+        font.name = props.get("font", theme["body_font"])
+        font.size = props.get("size", theme["body_size"])
+        # Color resolution: explicit "color" wins; if bg_color is set and no
+        # explicit color, default to sand-900 (or theme-provided bg_text_color)
+        # so text family matches the surface (or sits in neutral sand on
+        # colored bgs) instead of inheriting teal-ink body color.
+        if "color" in props:
+            font.color.rgb = props["color"]
+        elif "bg_color" in props:
+            default_bg_text = props.get("bg_text_color", hex_to_rgb(SAND_900))
+            if isinstance(default_bg_text, str):
+                default_bg_text = hex_to_rgb(default_bg_text)
+            font.color.rgb = default_bg_text
+        if props.get("bold"):
+            font.bold = True
+
+        pf = style.paragraph_format
+        pf.space_before = props.get("space_before", Pt(6))
+        pf.space_after = props.get("space_after", Pt(6))
+
+        # Build pBdr: left rule from border_color (existing behavior) +
+        # auto top/bottom hairline borders when bg_color is present (new).
+        # The auto top/bottom borders carry w:space (internal padding) so
+        # the shading region extends with breathing room above and below
+        # the text. Hairline width (sz=2) is the smallest renderable;
+        # reads as a near-invisible frame edge — actually helps the
+        # callout register as a discrete block in Google Docs.
+        left_border = "border_color" in props
+        has_bg = "bg_color" in props
+        if left_border or has_bg:
+            pf_elem = style.element
+            pPr = pf_elem.find(qn("w:pPr"))
+            if pPr is None:
+                pPr = parse_xml(f'<w:pPr {nsdecls("w")}/>')
+                pf_elem.insert(0, pPr)
+            existing_bdr = pPr.find(qn("w:pBdr"))
+            if existing_bdr is not None:
+                pPr.remove(existing_bdr)
+
+            # Build border children selectively
+            border_parts = []
+            if has_bg:
+                bg_padding = props.get("bg_padding_v", 120)  # twips; ~6pt default
+                # Top hairline border — invisible-ish frame + carries internal padding
+                border_parts.append(
+                    f'<w:top w:val="single" w:sz="2" w:space="{bg_padding // 20}" w:color="auto"/>'
+                )
+            if left_border:
+                border_hex = props["border_color"].lstrip("#")
+                border_parts.append(
+                    f'<w:left w:val="single" w:sz="18" w:space="8" w:color="{border_hex}"/>'
+                )
+            if has_bg:
+                bg_padding = props.get("bg_padding_v", 120)
+                border_parts.append(
+                    f'<w:bottom w:val="single" w:sz="2" w:space="{bg_padding // 20}" w:color="auto"/>'
+                )
+
+            pBdr_xml = (
+                f'<w:pBdr {nsdecls("w")}>' + "".join(border_parts) + '</w:pBdr>'
+            )
+            pBdr = parse_xml(pBdr_xml)
+            pPr.append(pBdr)
+
+        # Optional left indent — explicit "indent" wins; otherwise borders
+        # carry a default 240-twip clearance so the rule doesn't crowd content.
+        indent_twips = props.get("indent")
+        if indent_twips is None and "border_color" in props:
+            indent_twips = 240
+        if indent_twips is not None:
+            pf_elem = style.element
+            pPr = pf_elem.find(qn("w:pPr"))
+            if pPr is None:
+                pPr = parse_xml(f'<w:pPr {nsdecls("w")}/>')
+                pf_elem.insert(0, pPr)
+            existing_ind = pPr.find(qn("w:ind"))
+            if existing_ind is not None:
+                pPr.remove(existing_ind)
+            ind = parse_xml(f'<w:ind {nsdecls("w")} w:left="{indent_twips}"/>')
+            pPr.append(ind)
+
+        # Optional background shading
+        if "bg_color" in props:
+            bg_hex = props["bg_color"].lstrip("#")
+            pf_elem = style.element
+            pPr = pf_elem.find(qn("w:pPr"))
+            if pPr is None:
+                pPr = parse_xml(f'<w:pPr {nsdecls("w")}/>')
+                pf_elem.insert(0, pPr)
+            existing_shd = pPr.find(qn("w:shd"))
+            if existing_shd is not None:
+                pPr.remove(existing_shd)
+            shd = parse_xml(
+                f'<w:shd {nsdecls("w")} w:val="clear" w:color="auto" w:fill="{bg_hex}"/>'
+            )
+            pPr.append(shd)
+```
+
+**Note on the `w:space` units.** In OOXML, border `w:space` is measured in **points**, not twips, so `bg_padding // 20` converts twips → points (1pt = 20 twips). Default `bg_padding_v=120` twips → 6pt internal padding, top and bottom.
+
+#### 12.6.4 Update `directive_styles` dict for explicit per-directive `color` overrides where needed
+
+Most directives now pick up sand-900 text color automatically (since they have `bg_color`). The exceptions need explicit handling:
+
+```python
+        # In CENA_THEME["directive_styles"], modify card-title to keep its
+        # teal-700 color despite bg_color (sand-50). This is the documented
+        # exception — card-title is a section-label register, not body text
+        # on a surface, so the family-match rule yields to the section-label
+        # rule. (Iteration 3 §12.4.)
+        "card-title": {
+            "font":         "Lora",
+            "size":         Pt(12),
+            "color":        hex_to_rgb("#1e5149"),  # teal-700 — section-label register
+            "bold":         True,
+            "bg_color":     "#fbfaf8",
+            "space_before": Pt(4),
+            "space_after":  Pt(2),
+        },
+```
+
+Every other directive with `bg_color` automatically picks up sand-900 text from the new default in `apply_directive_styles()`. **No other directive entries need editing.** If Aaron later prefers family-match per-callout (e.g., `callout-warning` text = amber-900), the path is to add an explicit `"color": hex_to_rgb("#412900")` line per directive.
+
+### 12.7 Single decision to validate post-regenerate
+
+The biggest call in iteration 3 is **§12.4: sand-900 across the board vs. family-match per directive**. My choice: sand-900 across the board for consistency + restraint + Aaron's instinct.
+
+Validation path:
+- Regenerate → render the SoP → open in Google Docs.
+- Read the four callout variants (info / warning / success / error) side by side. Does sand-900-on-cyan-50, sand-900-on-amber-50, sand-900-on-green-50, sand-900-on-red-50 read as a coherent family? If yes — ship. If a specific callout reads "wrong family" (most likely candidate: red, where sand-900 may pull warm-red toward neutral-gray-ish), the swap is one line per directive: add `"color": hex_to_rgb("#4a0a0e")` (red-900) for `callout-error`, etc.
+
+### 12.8 Open issues added by iteration 3
+
+7. **Single-cell table wrappers for callouts.** The pBdr-based internal padding approach (§12.3) is the cheapest mechanism; if Google Docs round-trip strips the hairline borders, the next move is to wrap each callout in a 1-cell `<w:tbl>` with explicit `tcMar` for padding. Architectural change in `surface-emit/handlers.mjs`.
+
+8. **Definition lists for kv-tables.** The Scope section's pipe-table-as-kv-table has structural separation issues that can't be themed away (§12.5). The clean fix is to emit kv-tables as markdown definition lists, which pandoc renders as `Definition Term` + `Definition` paragraph styles that don't carry the pipe-table cell-height coupling. Markdown-source-layer change.
+
+9. **Per-directive family-match text colors.** §12.4 chose sand-900 universally; per-callout family-match (amber-900 / cyan-900 / etc.) is the alternative. Tracked as a swap-ready decision if Aaron prefers it after seeing the rendered output.
+
+10. **Brand spec amendment for body line-spacing at the docx surface.** `_tokens/typography.md` §3.2.1 specifies 1.55 at the web surface; the docx surface needs 1.4 to deliver the same perceived rhythm (§12.2). The brand spec could carry a per-surface footnote. Not authoring here — typography-spec territory.
+
