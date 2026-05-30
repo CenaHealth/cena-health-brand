@@ -21,11 +21,11 @@
   "families": {
     "teal":    { "root": "oklch(56.3% 0.0762 181.3)", "max": "oklch(96% 0.013 181)",  "min": "oklch(15% 0.025 183)", "role": "brand primary" },
     "sage":    { "root": "oklch(55% 0.085 145.5)",    "max": "oklch(95% 0.018 148)",  "min": "oklch(15% 0.020 148)", "role": "paired counterpart (Cena-canonical 18th family)" },
-    "sand":    { "root": "oklch(65% 0.016 75)",       "max": "oklch(98.5% 0.003 85)", "min": "oklch(15% 0.008 60)",  "role": "warm neutral (single neutral)" },
-    "red":     { "root": "oklch(55% 0.170 25)",       "max": "oklch(96% 0.020 30)",   "min": "oklch(20% 0.075 23)",  "role": "error / critical" },
-    "amber":   { "root": "oklch(63% 0.108 82)",       "max": "oklch(96% 0.020 85)",   "min": "oklch(22% 0.060 78)",  "role": "warning / caution" },
-    "green":   { "root": "oklch(55% 0.105 160)",      "max": "oklch(96% 0.025 155)",  "min": "oklch(20% 0.060 165)", "role": "success / confirmation" },
-    "cyan":    { "root": "oklch(50% 0.090 235)",      "max": "oklch(94% 0.035 215)",  "min": "oklch(20% 0.060 240)", "role": "info / informational" },
+    "sand":    { "root": "oklch(65% 0.016 75)",       "max": "oklch(96.8% 0.011 82)", "min": "oklch(15% 0.008 60)",  "role": "warm neutral (single neutral)" },
+    "red":     { "root": "oklch(55% 0.170 25)",       "max": "oklch(95.5% 0.030 28)", "min": "oklch(20% 0.075 23)",  "role": "error / critical" },
+    "amber":   { "root": "oklch(63% 0.108 82)",       "max": "oklch(95.5% 0.030 84)", "min": "oklch(22% 0.060 78)",  "role": "warning / caution" },
+    "green":   { "root": "oklch(55% 0.105 160)",      "max": "oklch(95.5% 0.036 156)","min": "oklch(20% 0.060 165)", "role": "success / confirmation" },
+    "cyan":    { "root": "oklch(50% 0.090 235)",      "max": "oklch(94% 0.048 215)",  "min": "oklch(20% 0.060 240)", "role": "info / informational" },
 
     "orange":  { "root": "oklch(58% 0.115 35)",       "max": "oklch(96% 0.025 45)",   "min": "oklch(20% 0.065 30)",  "role": "terracotta / earth accent" },
     "yellow":  { "root": "oklch(72% 0.115 95)",       "max": "oklch(96% 0.025 90)",   "min": "oklch(28% 0.060 100)", "role": "illumination accent" },

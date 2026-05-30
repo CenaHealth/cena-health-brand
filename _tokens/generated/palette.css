@@ -8,7 +8,7 @@
  * Family set:   spec §2 (16 Tailwind hue families + sage + sand = 18 active).
  * Output:       OKLCH-in-P3 primary + sRGB hex fallback (-hex suffix).
  *
- * Generated: 2026-05-11
+ * Generated: 2026-05-30
  * Source version: 2026-05-11
  * Direction: tailwind (50 = lightest, 950 = darkest)
  */
@@ -69,16 +69,16 @@
   --color-sage-950-hex: #060d07;
 
   /* sand — warm neutral (single neutral) */
-  --color-sand-50: oklch(98.50% 0.0030 85.00);
-  --color-sand-50-hex: #fbfaf8;
-  --color-sand-100: oklch(91.80% 0.0056 83.00);
-  --color-sand-100-hex: #e6e4e0;
-  --color-sand-200: oklch(85.10% 0.0082 81.00);
-  --color-sand-200-hex: #d1cec8;
-  --color-sand-300: oklch(78.40% 0.0108 79.00);
-  --color-sand-300-hex: #bcb8b1;
-  --color-sand-400: oklch(71.70% 0.0134 77.00);
-  --color-sand-400-hex: #a8a39b;
+  --color-sand-50: oklch(96.80% 0.0110 82.00);
+  --color-sand-50-hex: #f8f4ec;
+  --color-sand-100: oklch(90.44% 0.0120 80.60);
+  --color-sand-100-hex: #e4dfd7;
+  --color-sand-200: oklch(84.08% 0.0130 79.20);
+  --color-sand-200-hex: #cfcac2;
+  --color-sand-300: oklch(77.72% 0.0140 77.80);
+  --color-sand-300-hex: #bbb6ad;
+  --color-sand-400: oklch(71.36% 0.0150 76.40);
+  --color-sand-400-hex: #a8a298;
   --color-sand-500: oklch(65.00% 0.0160 75.00);
   --color-sand-500-hex: #958e85;
   --color-sand-600: oklch(55.00% 0.0144 72.00);
@@ -93,16 +93,16 @@
   --color-sand-950-hex: #0e0a08;
 
   /* red — error / critical */
-  --color-red-50: oklch(96.00% 0.0200 30.00);
-  --color-red-50-hex: #ffedea;
-  --color-red-100: oklch(87.80% 0.0500 29.00);
-  --color-red-100-hex: #f6cbc4;
-  --color-red-200: oklch(79.60% 0.0800 28.00);
-  --color-red-200-hex: #eca9a0;
-  --color-red-300: oklch(71.40% 0.1100 27.00);
-  --color-red-300-hex: #df877d;
-  --color-red-400: oklch(63.20% 0.1400 26.00);
-  --color-red-400-hex: #d1645c;
+  --color-red-50: oklch(95.50% 0.0300 28.00);
+  --color-red-50-hex: #ffe9e5;
+  --color-red-100: oklch(87.40% 0.0580 27.40);
+  --color-red-100-hex: #fac8c1;
+  --color-red-200: oklch(79.30% 0.0860 26.80);
+  --color-red-200-hex: #eea79e;
+  --color-red-300: oklch(71.20% 0.1140 26.20);
+  --color-red-300-hex: #e0857c;
+  --color-red-400: oklch(63.10% 0.1420 25.60);
+  --color-red-400-hex: #d1625b;
   --color-red-500: oklch(55.00% 0.1700 25.00);
   --color-red-500-hex: #c13c3b;
   --color-red-600: oklch(48.00% 0.1510 24.60);
@@ -117,16 +117,16 @@
   --color-red-950-hex: #300205;
 
   /* amber — warning / caution */
-  --color-amber-50: oklch(96.00% 0.0200 85.00);
-  --color-amber-50-hex: #f8f1e3;
-  --color-amber-100: oklch(89.40% 0.0376 84.40);
-  --color-amber-100-hex: #e8dbc1;
-  --color-amber-200: oklch(82.80% 0.0552 83.80);
-  --color-amber-200-hex: #d8c49e;
-  --color-amber-300: oklch(76.20% 0.0728 83.20);
-  --color-amber-300-hex: #c8ae7c;
-  --color-amber-400: oklch(69.60% 0.0904 82.60);
-  --color-amber-400-hex: #b99859;
+  --color-amber-50: oklch(95.50% 0.0300 84.00);
+  --color-amber-50-hex: #faefda;
+  --color-amber-100: oklch(89.00% 0.0456 83.60);
+  --color-amber-100-hex: #e9d9b9;
+  --color-amber-200: oklch(82.50% 0.0612 83.20);
+  --color-amber-200-hex: #d9c399;
+  --color-amber-300: oklch(76.00% 0.0768 82.80);
+  --color-amber-300-hex: #c9ad78;
+  --color-amber-400: oklch(69.50% 0.0924 82.40);
+  --color-amber-400-hex: #b99757;
   --color-amber-500: oklch(63.00% 0.1080 82.00);
   --color-amber-500-hex: #aa8232;
   --color-amber-600: oklch(54.80% 0.0984 81.20);
@@ -141,16 +141,16 @@
   --color-amber-950-hex: #291600;
 
   /* green — success / confirmation */
-  --color-green-50: oklch(96.00% 0.0250 155.00);
-  --color-green-50-hex: #e5f7eb;
-  --color-green-100: oklch(87.80% 0.0410 156.00);
-  --color-green-100-hex: #c2dfcc;
-  --color-green-200: oklch(79.60% 0.0570 157.00);
-  --color-green-200-hex: #9fc8ae;
-  --color-green-300: oklch(71.40% 0.0730 158.00);
-  --color-green-300-hex: #7cb191;
-  --color-green-400: oklch(63.20% 0.0890 159.00);
-  --color-green-400-hex: #579a76;
+  --color-green-50: oklch(95.50% 0.0360 156.00);
+  --color-green-50-hex: #def8e6;
+  --color-green-100: oklch(87.40% 0.0498 156.80);
+  --color-green-100-hex: #bce0c9;
+  --color-green-200: oklch(79.30% 0.0636 157.60);
+  --color-green-200-hex: #9ac8ac;
+  --color-green-300: oklch(71.20% 0.0774 158.40);
+  --color-green-300-hex: #78b190;
+  --color-green-400: oklch(63.10% 0.0912 159.20);
+  --color-green-400-hex: #549a75;
   --color-green-500: oklch(55.00% 0.1050 160.00);
   --color-green-500-hex: #2c845c;
   --color-green-600: oklch(48.00% 0.0960 161.00);
@@ -165,16 +165,16 @@
   --color-green-950-hex: #001e0f;
 
   /* cyan — info / informational */
-  --color-cyan-50: oklch(94.00% 0.0350 215.00);
-  --color-cyan-50-hex: #d2f2fa;
-  --color-cyan-100: oklch(85.20% 0.0460 219.00);
-  --color-cyan-100-hex: #aed6e3;
-  --color-cyan-200: oklch(76.40% 0.0570 223.00);
-  --color-cyan-200-hex: #8bbbcd;
-  --color-cyan-300: oklch(67.60% 0.0680 227.00);
-  --color-cyan-300-hex: #69a0b8;
-  --color-cyan-400: oklch(58.80% 0.0790 231.00);
-  --color-cyan-400-hex: #4785a3;
+  --color-cyan-50: oklch(94.00% 0.0480 215.00);
+  --color-cyan-50-hex: #c8f4ff;
+  --color-cyan-100: oklch(85.20% 0.0564 219.00);
+  --color-cyan-100-hex: #a6d8e8;
+  --color-cyan-200: oklch(76.40% 0.0648 223.00);
+  --color-cyan-200-hex: #84bcd1;
+  --color-cyan-300: oklch(67.60% 0.0732 227.00);
+  --color-cyan-300-hex: #64a1ba;
+  --color-cyan-400: oklch(58.80% 0.0816 231.00);
+  --color-cyan-400-hex: #4485a4;
   --color-cyan-500: oklch(50.00% 0.0900 235.00);
   --color-cyan-500-hex: #236b8f;
   --color-cyan-600: oklch(44.00% 0.0840 236.00);
