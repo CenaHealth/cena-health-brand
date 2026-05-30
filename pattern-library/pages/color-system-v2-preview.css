@@ -331,7 +331,7 @@
   --color-rose-900: color-mix(in oklch, var(--rose-min) 80%, var(--rose-root));
   --color-rose-950: var(--rose-min);
 
-  --page-bg: #FBFAF8;
+  --page-bg: #F8F4EC;
   --text-main: #25211D;
   --text-mute: #5B544C;
   --rule:      #D1CDC6;

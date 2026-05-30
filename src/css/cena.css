@@ -119,9 +119,9 @@
   --color-black: var(--color-sand-950);   /* near-black */
 
   /* Semantic surface utilities — prefer these over bg-white/bg-gray-* */
-  --color-surface-page:      var(--color-sand-50);   /* #fbfaf8 — page background */
-  --color-surface-primary:   var(--color-sand-100);  /* #e6e4e0 — card/panel fill */
-  --color-surface-secondary: var(--color-sand-200);  /* #d1cec8 — recessed/hover */
+  --color-surface-page:      var(--color-sand-50);   /* #f8f4ec — page background */
+  --color-surface-primary:   var(--color-sand-100);  /* #e4dfd7 — card/panel fill */
+  --color-surface-secondary: var(--color-sand-200);  /* #cfcac2 — recessed/hover */
 
   /* Feedback — success, error, warning, info.
      Maps semantic *-50 (light bg) through *-900 (dark text) to the
