@@ -528,6 +528,43 @@ When a pill's family equals the surface family AND the surface is the page backg
 | Body text on surface | family-700 or family-800 |
 | Subtle accent or shadow | family-100 or family-900 (hue weak by design) |
 
+### 6.8 Feedback-surface convention — per-family stops for full-area feedback surfaces
+
+Sand is the canonical surface family (per §4 semantic tokens). The four **feedback families** — `red`, `amber`, `green`, `cyan` — are additionally authorized for *full-area feedback surface* use: a tinted alert region, a callout block, an info panel, a confirmation card. In these cases the hue itself IS the semantic (severity, warning, success, info) and a tinted ground is the right vocabulary.
+
+This convention is narrow by design. **The other 14 families — including teal and sage — are not authorized as full-area tinted surfaces.** Brand identity (teal, sage) and accent families (orange / yellow / lime / emerald / blue / indigo / violet / purple / fuchsia / pink / rose) carry hue at the chip, badge, accent, icon, or chart-categorical layer per §6.3 and §6.7 — never as running-text container.
+
+**Convention (light mode):**
+
+| Role | Stop | Example (red) |
+|---|---|---|
+| `surface` (background fill) | family-50 | red-50 (`#ffe9e5`) |
+| `border` (edge stroke, 1px) | family-300 | red-300 (`#e0857c`) |
+| `text-on-surface` default | family-900 | red-900 (`#4a0a0e`) |
+| `text-on-surface` muted **+ icon-on-surface** | family-700 | red-700 (`#832224`) |
+
+Icon-on-surface shares the muted-text stop — there is no separate icon token. Icons earn visual weight from glyph mass and stroke (FA-solid), not from a stop step away from body text. This matches the canonical sand-surface pattern in `semantic.css`, where `--color-text-muted` (sand-700) carries icon duty implicitly.
+
+**Dark-mode mirror** (per palette midpoint, matching the sand mirror in `semantic.css`'s `.dark` block):
+
+| Role | Stop |
+|---|---|
+| `surface` | family-900 |
+| `border` | family-700 |
+| `text-on-surface` default | family-50 |
+| `text-on-surface` muted + icon-on-surface | family-300 |
+
+**Visual companion:** [`Lab/cena-health-brand/specs/color-family-surface-spec.svg`](../specs/color-family-surface-spec.svg) renders this convention for the four feedback families.
+
+**Relationship to §6.3 (light-pill formula).** §6.3's formula is for *inline pills, chips, and badges* — small elements with hue-as-category-signal. It uses a lighter border (family-200), saturated mid heading (family-500), and dark body text (family-800). §6.8's convention is for *full-area feedback surfaces* — larger regions with hue-as-semantic-signal, holding running text and icons. It uses a darker border (family-300) for clearer canvas edge at larger scale, and dark/muted text stops (family-900 / family-700) that match the canonical sand surface treatment in `semantic.css`. Both conventions are valid; component authors pick the one matching their element's scale and intent.
+
+**Anti-pattern — tinted-identity surface (teal, sage) as "brand-anchor ground."** Brand-anchor moments use teal text, a teal accent rule, or a teal icon on a sand surface (per §4 semantic tokens) — never teal-tinted ground. The infrastructure-feels-grown mechanism requires warm ground; tinted-teal ground breaks Warm Ground / Cool Figure (Principle 3). Teal is figure, never ground. The same prohibition holds for sage and the 12 accent families: hue acts on figure, not on ground.
+
+**Authoring rule.** When a component needs a tinted background AND the hue is one of red / amber / green / cyan AND the hue carries a feedback semantic — reach for this convention. Anywhere else, reach for the canonical sand surface (per §4) with accent stops on figures (per §6.3, §6.7). When in doubt, sand-surface is the safe move.
+
+<!-- @Aaron: §6.8 absorbed Haven Visual Designer review 2026-06-06 — narrowed scope (4 feedback families, not 18), collapsed icon stop to muted-text stop, added tinted-identity-surface anti-pattern paragraph. Border stop family-300 confirmed. Disposition trail in ~/.claude/plans/color-system-v2-tinted-surface-section.md § Review trail. -->
+
+
 ---
 
 ## 7. Validation gate — Aaron review

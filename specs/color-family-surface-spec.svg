@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="744" viewBox="0 0 760 744" font-family="'Source Sans 3', system-ui, sans-serif">
+  <rect width="760" height="744" fill="#ffffff"/>
+
+  <!-- Header -->
+  <text x="48" y="44" font-family="Lora, Georgia, serif" font-size="24" font-weight="600" fill="#25211d">Cena Color System v2 · Feedback-surface convention</text>
+  <text x="48" y="70" font-size="14" fill="#5a544e">Authorized families: red · amber · green · cyan (per §6.8).</text>
+  <text x="48" y="90" font-size="14" fill="#5a544e">Other hue families: accent stops on sand surface only — never tinted ground.</text>
+  <text x="48" y="114" font-family="'Source Code Pro', ui-monospace, monospace" font-size="12" fill="#5a544e">surface = 50 · border = 300 · text default = 900 · text muted + icon = 700 · (light mode)</text>
+  <line x1="48" y1="130" x2="712" y2="130" stroke="#cfcac2" stroke-width="1"/>
+
+  <!-- =================== Row 0: red · amber =================== -->
+
+  <!-- red -->
+  <g transform="translate(48,152)">
+    <rect width="320" height="260" rx="12" fill="#ffe9e5" stroke="#e0857c" stroke-width="1"/>
+    <text x="20" y="44" font-family="Lora, Georgia, serif" font-size="24" font-weight="600" fill="#4a0a0e">red · error</text>
+    <circle cx="292" cy="36" r="12" fill="#832224"/>
+    <line x1="20" y1="64" x2="300" y2="64" stroke="#e0857c" stroke-width="1"/>
+    <text x="20" y="92" font-size="16" fill="#4a0a0e">The quick brown fox</text>
+    <text x="20" y="114" font-size="14" fill="#832224">Muted secondary copy</text>
+    <g font-family="'Source Code Pro', ui-monospace, monospace" font-size="11">
+      <rect x="20" y="138" width="14" height="14" fill="#ffe9e5" stroke="#e0857c"/><text x="40" y="150" fill="#832224">surface · red-50 · #ffe9e5</text>
+      <rect x="20" y="160" width="14" height="14" fill="#e0857c"/><text x="40" y="172" fill="#832224">border · red-300 · #e0857c</text>
+      <rect x="20" y="182" width="14" height="14" fill="#4a0a0e"/><text x="40" y="194" fill="#832224">text default · red-900 · #4a0a0e</text>
+      <rect x="20" y="204" width="14" height="14" fill="#832224"/><text x="40" y="216" fill="#832224">text muted + icon · red-700 · #832224</text>
+    </g>
+  </g>
+
+  <!-- amber -->
+  <g transform="translate(392,152)">
+    <rect width="320" height="260" rx="12" fill="#faefda" stroke="#c9ad78" stroke-width="1"/>
+    <text x="20" y="44" font-family="Lora, Georgia, serif" font-size="24" font-weight="600" fill="#412900">amber · warning</text>
+    <circle cx="292" cy="36" r="12" fill="#735311"/>
+    <line x1="20" y1="64" x2="300" y2="64" stroke="#c9ad78" stroke-width="1"/>
+    <text x="20" y="92" font-size="16" fill="#412900">The quick brown fox</text>
+    <text x="20" y="114" font-size="14" fill="#735311">Muted secondary copy</text>
+    <g font-family="'Source Code Pro', ui-monospace, monospace" font-size="11">
+      <rect x="20" y="138" width="14" height="14" fill="#faefda" stroke="#c9ad78"/><text x="40" y="150" fill="#735311">surface · amber-50 · #faefda</text>
+      <rect x="20" y="160" width="14" height="14" fill="#c9ad78"/><text x="40" y="172" fill="#735311">border · amber-300 · #c9ad78</text>
+      <rect x="20" y="182" width="14" height="14" fill="#412900"/><text x="40" y="194" fill="#735311">text default · amber-900 · #412900</text>
+      <rect x="20" y="204" width="14" height="14" fill="#735311"/><text x="40" y="216" fill="#735311">text muted + icon · amber-700 · #735311</text>
+    </g>
+  </g>
+
+  <!-- =================== Row 1: green · cyan =================== -->
+
+  <!-- green -->
+  <g transform="translate(48,436)">
+    <rect width="320" height="260" rx="12" fill="#def8e6" stroke="#78b190" stroke-width="1"/>
+    <text x="20" y="44" font-family="Lora, Georgia, serif" font-size="24" font-weight="600" fill="#00301d">green · success</text>
+    <circle cx="292" cy="36" r="12" fill="#07593b"/>
+    <line x1="20" y1="64" x2="300" y2="64" stroke="#78b190" stroke-width="1"/>
+    <text x="20" y="92" font-size="16" fill="#00301d">The quick brown fox</text>
+    <text x="20" y="114" font-size="14" fill="#07593b">Muted secondary copy</text>
+    <g font-family="'Source Code Pro', ui-monospace, monospace" font-size="11">
+      <rect x="20" y="138" width="14" height="14" fill="#def8e6" stroke="#78b190"/><text x="40" y="150" fill="#07593b">surface · green-50 · #def8e6</text>
+      <rect x="20" y="160" width="14" height="14" fill="#78b190"/><text x="40" y="172" fill="#07593b">border · green-300 · #78b190</text>
+      <rect x="20" y="182" width="14" height="14" fill="#00301d"/><text x="40" y="194" fill="#07593b">text default · green-900 · #00301d</text>
+      <rect x="20" y="204" width="14" height="14" fill="#07593b"/><text x="40" y="216" fill="#07593b">text muted + icon · green-700 · #07593b</text>
+    </g>
+  </g>
+
+  <!-- cyan -->
+  <g transform="translate(392,436)">
+    <rect width="320" height="260" rx="12" fill="#c8f4ff" stroke="#64a1ba" stroke-width="1"/>
+    <text x="20" y="44" font-family="Lora, Georgia, serif" font-size="24" font-weight="600" fill="#002740">cyan · info</text>
+    <circle cx="292" cy="36" r="12" fill="#0a4866"/>
+    <line x1="20" y1="64" x2="300" y2="64" stroke="#64a1ba" stroke-width="1"/>
+    <text x="20" y="92" font-size="16" fill="#002740">The quick brown fox</text>
+    <text x="20" y="114" font-size="14" fill="#0a4866">Muted secondary copy</text>
+    <g font-family="'Source Code Pro', ui-monospace, monospace" font-size="11">
+      <rect x="20" y="138" width="14" height="14" fill="#c8f4ff" stroke="#64a1ba"/><text x="40" y="150" fill="#0a4866">surface · cyan-50 · #c8f4ff</text>
+      <rect x="20" y="160" width="14" height="14" fill="#64a1ba"/><text x="40" y="172" fill="#0a4866">border · cyan-300 · #64a1ba</text>
+      <rect x="20" y="182" width="14" height="14" fill="#002740"/><text x="40" y="194" fill="#0a4866">text default · cyan-900 · #002740</text>
+      <rect x="20" y="204" width="14" height="14" fill="#0a4866"/><text x="40" y="216" fill="#0a4866">text muted + icon · cyan-700 · #0a4866</text>
+    </g>
+  </g>
+
+</svg>
