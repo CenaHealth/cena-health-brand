@@ -6,7 +6,7 @@ _Per-directive paragraph styling for `reference-cena.docx`. Drop-in `directive_s
 
 ## 1. Context
 
-Cena Health's first SoP review cycle ships through Google Drive: markdown → pandoc (with `reference-cena.docx` + Lua filter) → `.docx` → Google Doc in suggesting mode → reviewer comments + edits → `pandoc --track-changes=all` back to markdown. The round-trip works (2026-05-28 test). One placeholder `callout-warning` style — diagnostic-loud amber on warm-amber bg — was sufficient to prove the pipeline; it is not brand-true and was never meant to be.
+Cena Health's first SoP review cycle ships through Google Drive: markdown → pandoc (with `reference-cena.docx` + Lua filter) → `.docx` → Google Doc in suggesting mode → reviewer comments + edits → `pandoc --track-changes=all` back to markdown. The round-trip works (2026-05-28 test). One placeholder `alert-warning` style — diagnostic-loud amber on warm-amber bg — was sufficient to prove the pipeline; it is not brand-true and was never meant to be.
 
 This spec replaces that placeholder with the full Haven directive vocabulary, tuned for what python-docx can actually express and what survives Google Docs' style-name flattening on import. The output is a styling pass on `apply_directive_styles()` at lines 246–316 of `.claude/config/drive-themes/generate-references.py`; this spec authors only the data block (lines 394–401), not the function.
 
@@ -22,7 +22,7 @@ Three things hold steady across the compression:
 
 - **Typography carries the most.** The reference docx already encodes Lora + Source Sans 3 + Source Code Pro, Cena Color System v2 anchors, the warm body color `#0D322D`, and generous line spacing. The directives inherit from that body voice and earn distinction through restrained delta — color, bg shading, weight, or a left border — not through replacing the type system.
 - **Color carries the severity register.** Cena's functional palette is desaturated by design (Principle 6 — restraint as default): `red-500` is `#c13c3b`, not candy-red; `amber-500` is `#aa8232`, an earthen ochre. Saturated borders on the `-50` background steps give the severity ramp without breaking the warm-ground register.
-- **Bg shading is the load-bearing graceful degradation.** Google Docs flattens style names on import but preserves per-paragraph background shading verbatim (validated 2026-05-28 round-trip). That makes shading the only way to assert "this is a callout block" once the `callout-warning` style name is gone. Use it deliberately — for genuine block-level callouts where the per-paragraph-rectangle reading is desired — and never for inline-shaped directives.
+- **Bg shading is the load-bearing graceful degradation.** Google Docs flattens style names on import but preserves per-paragraph background shading verbatim (validated 2026-05-28 round-trip). That makes shading the only way to assert "this is a callout block" once the `alert-warning` style name is gone. Use it deliberately — for genuine block-level callouts where the per-paragraph-rectangle reading is desired — and never for inline-shaped directives.
 
 What the quiet-mode test means here: read a one-page SoP rendered through this theme with all directives removed. The page should still feel like Haven — Lora commanding the headings, Source Sans 3 working through the body at 1.5 line-height on warm-on-dark teal text. The directives are the brand moments inside that quiet base; if every paragraph carries a colored shade, the quiet base is gone and the directives have lost their function. Restraint discipline (Tier 3 Principle 11) is therefore the load-bearing constraint on how many directives a single SoP uses, not how each one is styled.
 
@@ -34,28 +34,28 @@ The "grew, not built" test on this surface: directives should feel like the docu
 
 Color values throughout reference Cena Color System v2 (`Lab/cena-health-brand/_tokens/generated/palette.css`). All `-50` and `-500` references are to v2 family steps.
 
-### 3.1 `callout-info`
+### 3.1 `alert-info`
 
 - **Semantic intent.** Neutral context — a note, a clarification, a pointer to a sibling document. The "for your awareness" register; lowest severity. In SoPs: backstory on why the procedure exists, where a related policy lives, mode-specific caveats.
 - **Visual treatment.** Cyan-50 background (`#d2f2fa`), cyan-500 left border (`#236b8f`, 18-unit thick), Source Sans 3 body, body color preserved, 8pt space before/after. The cyan family is the system's "info" register — a desaturated slate-blue that reads as informational rather than alerting.
 - **Rationale.** Principle 6 (restraint) — info is the lowest-severity advisory, so the visual delta is smallest. The bg + left rule asserts "this is a block" without competing with body text. Color carries severity (cyan = info per the functional family naming); the type stays in the body's working voice.
 - **Quality-test notes.** Quiet-mode: at one or two per page, this reads as a quiet aside. Grew-not-built: the left rule echoes the blockquote treatment already in the theme (teal-500 quote border), so this directive feels like a sibling of an existing convention, not a new chrome. Defer to Aaron only if the cyan family reads as "too blue" against the warm ground in Google Docs preview — fallback option is to drop the bg and lean only on the cyan border.
 
-### 3.2 `callout-warning`
+### 3.2 `alert-warning`
 
 - **Semantic intent.** "Pay attention here" — a constraint, a common pitfall, a thing that bites you if missed. One step up from info: the reader should pause. In SoPs: phrasing tips on sensitive conversations, edge cases that trip new staff, deadlines that are easy to miss.
 - **Visual treatment.** Amber-50 background (`#f8f1e3`), amber-500 left border (`#aa8232`), Source Sans 3 body, body color preserved, 8pt space before/after.
 - **Rationale.** Cena's amber-500 is `#aa8232` — an earthen ochre, not a candy yellow. This is the brand's restraint at work: warning reads as warning without breaking the warm-ground register. The placeholder used `#a8420c` / `#fef3e2` (diagnostic-loud, picked for visibility in the round-trip test); the v2 amber family is the brand's actual warning vocabulary and reads as cohesive with the rest of the palette. Same bg/border architecture as info — severity carried by hue alone, not by adding chrome.
 - **Quality-test notes.** Quiet-mode: amber-50 is the warmest of the four callout backgrounds; on the body's warm body register, it reads as a slightly more amber paragraph rather than a foreign rectangle. Grew-not-built: amber is hue-adjacent to the warm ground (both at H:75-85), so the directive feels like the page itself raising an eyebrow, not an injected widget. **Replaces the 2026-05-28 placeholder.**
 
-### 3.3 `callout-success`
+### 3.3 `alert-success`
 
 - **Semantic intent.** Confirmation, healthy state, a positive outcome to recognize. In SoPs: "if you see this state, you're done"; ratification at the end of a procedure step; the "on track" register in escalation flag rows.
 - **Visual treatment.** Green-50 background (`#e5f7eb`), green-500 left border (`#2c845c`), Source Sans 3 body, body color preserved, 8pt space before/after.
 - **Rationale.** v2's green family (H:155–165) is distinct from sage (H:145–148). Sage is brand-identity; green is functional-success. Keeping them separate preserves the brand's analogous teal→sage hue shift without overloading sage with a functional-color meaning. Green-500 `#2c845c` is the desaturated success per Cena's functional palette — restraint applied to a register that often defaults to candy mint elsewhere.
 - **Quality-test notes.** Quiet-mode: success callouts should be rare in SoPs (most steps don't end with celebration) — if a draft uses success often, the draft is over-affirming. Restraint test should flag that pattern. Grew-not-built: the green is hue-close enough to sage to feel related to the brand's analogous logic, while saturation difference keeps the functional reading intact.
 
-### 3.4 `callout-error`
+### 3.4 `alert-error`
 
 - **Semantic intent.** Critical risk — "do not do this," "this is unsafe," "wrong by default." Highest severity in the callout family. Distinct from escalation: error is the unsafe state to avoid; escalation is what to do when something already broke.
 - **Visual treatment.** Red-50 background (`#ffedea`), red-500 left border (`#c13c3b`), Source Sans 3 body, body color preserved, 8pt space before/after.
@@ -83,7 +83,7 @@ Color values throughout reference Cena Color System v2 (`Lab/cena-health-brand/_
 - **Rationale.** Card-body is essentially "Normal paragraph but inside a card" — same type, same color, same line height, only the bg shifts. This is the simplest entry in the spec by design: the body inherits everything from Normal and only declares the bg shift that ties it visually to the card-title above.
 - **Quality-test notes.** Note that **tables inside a card body** will render with their own borders + shading because the Word table style is applied independently. The card-body bg only colors paragraphs, not table cells. This is fine and was true of the SoP HTML too (the kv-tables inside cards in the HTML have their own visual treatment). Honest limit: if a card body contains a paragraph followed by a bullet list, the bullet list won't inherit `card-body` styling unless the markdown source explicitly opens a fenced div around the whole block — which the `surface-emit` handlers should already do, but is worth validating with Marrero's first round.
 
-### 3.8 `attestation`
+### 3.8 `attestation-block`
 
 - **Semantic intent.** The approval block at the bottom of every SoP. The moment the SoP becomes operational. Highest brand weight in the directive vocabulary — this *is* the cena commitment surfacing in the document. Distinct from callouts (advisory) and cards (container): attestation is the document declaring its own authority status.
 - **Visual treatment.** Sand-100 background (`#e6e4e0`) — perceptibly warmer than the page ground, signaling "different register"; sand-300 left border (`#bcb8b1`, the brand's `border-default`), Lora at 11pt (slight uplift from body), body color, 12pt space before, 8pt space after. The sand-300 border matches the theme's `border_color` token, so this directive looks like a sibling of the existing blockquote/table border language.
@@ -99,9 +99,9 @@ Color values throughout reference Cena Color System v2 (`Lab/cena-health-brand/_
 
 ### 3.10 `escalation`
 
-- **Semantic intent.** "If X breaks or surfaces, contact Y." Safety-information weight without being alarming. Distinct from `callout-error` (which is "do not do this" — preventative): escalation is "when something has gone off-script, here's the route." In SoP HTML this is the "If a safety or medical concern comes up" block; in Care Coordinator's escalation flags it's the red-flag/yellow-flag/green panels (though those are alerts, not escalations strictly).
+- **Semantic intent.** "If X breaks or surfaces, contact Y." Safety-information weight without being alarming. Distinct from `alert-error` (which is "do not do this" — preventative): escalation is "when something has gone off-script, here's the route." In SoP HTML this is the "If a safety or medical concern comes up" block; in Care Coordinator's escalation flags it's the red-flag/yellow-flag/green panels (though those are alerts, not escalations strictly).
 - **Visual treatment.** Sand-50 background (`#fbfaf8` — same as card, the warm ground itself), amber-700 left border (`#735311` — a darker, more grounded amber than the warning border), Source Sans 3 body, body color, 8pt space before/after.
-- **Rationale.** Escalation lives in a register between warning and error. Using amber-700 (darker than warning's amber-500) gives it slightly more weight than `callout-warning` without going full red — which would mis-read as "do not do this" rather than "here's the route when something happened." The bg is sand-50 (the warm ground), so the directive's emphasis comes entirely from the left rule. This is the "infrastructure quietly providing the route" reading — escalation is the document offering safety, not raising alarm. The contrast with `callout-error`'s red-500 border is deliberate: error and escalation are visually distinguishable on the page, and the reader learns to treat them differently.
+- **Rationale.** Escalation lives in a register between warning and error. Using amber-700 (darker than warning's amber-500) gives it slightly more weight than `alert-warning` without going full red — which would mis-read as "do not do this" rather than "here's the route when something happened." The bg is sand-50 (the warm ground), so the directive's emphasis comes entirely from the left rule. This is the "infrastructure quietly providing the route" reading — escalation is the document offering safety, not raising alarm. The contrast with `alert-error`'s red-500 border is deliberate: error and escalation are visually distinguishable on the page, and the reader learns to treat them differently.
 - **Quality-test notes.** Quiet-mode: escalation should appear once per SoP at most — at the boundary where the role hands off to a more accountable party. If it appears more than once, the SoP probably has scope drift. Grew-not-built: the amber-700-on-sand-50 combo is the spec's most "structural" treatment — quiet bg, strong rule. It reads as a piece of infrastructure (a routing rule) rather than as an advisory.
 
 ### 3.11 `decision-branch`
@@ -143,6 +143,18 @@ Color values throughout reference Cena Color System v2 (`Lab/cena-health-brand/_
   - **Dual-surface parity.** The HTML interactive diagram and the DOCX static PNG must feel like the same figure in two viewports — same caption typography, same eyebrow, same description below. Only divergence: HTML has live pan/zoom controls; DOCX shows the deterministic fit-to-page snapshot. Read both side-by-side: the caption + eyebrow should be visually identical (same font, same color, same spacing); the asset content should be the same (the PNG IS the HTML at print zoom); the description below should be the same prose. If they diverge on caption or eyebrow, the spec broke.
   - **DOCX page-fit.** The pan-zoom plan already settled this — Chrome headless renders the diagram at `--print-zoom` (computed at render time as `structural-min-width / target-print-width`); the PNG is one-page-width-fit. The brand spec does not need to address multi-page split logic because the print-zoom mechanism makes that case impossible by construction. If a future diagram is so structurally wide that print-zoom shrinks text below 6pt (an honest legibility floor), the fix is upstream — split the workflow, not the figure. Worth flagging in the SoP authoring guide as the implicit constraint: "if your workflow spec produces a diagram that doesn't survive print-fit at ≥6pt label text, the workflow is too dense for one figure."
   - **Defer to Aaron** if the eyebrow-above-caption pattern reads as ceremony in the final SoP render — fallback is to drop the eyebrow and let the caption alone announce the register shift. The eyebrow earns its place at the slot-shift function; if SoP readers signal it's noise, it goes.
+
+### 3.14 `review-marker`
+
+- **Semantic intent.** Visible scaffolding for unresolved review prompts in pre-approval SoP drafts. Wraps a question or open item the team is asking a clinical reviewer (or other approver) to resolve before the SoP ships. Distinguishes "the team is asking the reviewer this" from "the procedure says this." Distinct from every other directive: not advisory severity (the `:::alert-*` family), not safety-routing (`:::escalation`), not a structural container (`:::card`, `:::attestation-block`) — it is *content that should not be present in an approved SoP*, made visible so its presence is obvious.
+- **Visual treatment.** Amber-50 background (`#faefda`), amber-700 left rule (`#735311`), dashed style on the HTML surface (solid on docx where dashed paragraph borders don't survive Google Docs round-trip), Source Sans 3 body, body color, 8pt space before/after. The amber-700 rule is the same value used for `escalation` but the *dashed* style + the differently-shaped amber-50 background (warmer than escalation's sand-50) makes the register distinct: escalation is "safety route, infrastructure;" review-marker is "draft scaffolding, not approved." Author's content typically opens with a bolded `[Needs <reviewer>]` prefix that names whose answer is required.
+- **Rationale.** The failure shape this prevents: a coordinator on a live call reading "escalate per protocol — `[NEEDS VANESSA / MARRERO …]`" and not knowing whether the bracketed content is procedure or a hole. Inline `<code>` formatting (the prior treatment) collapses the marker into the procedural prose. A block-level directive with its own visual chrome quarantines the marker — visible on both surfaces (reviewer sees it in Google Docs, coordinator-facing HTML render makes it impossible to miss), failing closed when leftover markers ship to operational use. The dashed left rule signals "draft" without overloading any callout register; the amber palette signals "pay attention to this hole" without alarming.
+- **Quality-test notes.**
+  - **Quiet-mode.** A review-marker should NEVER appear in an approved SoP. If one is rendered in the final shipped version, the chrome's job is to make that obvious enough to catch on a quick scroll. The dashed border + warm bg achieves this without breaking the document's quiet register on every other page (because no approved SoP will have a marker rendered).
+  - **Grew-not-built.** The dashed amber border is the haven document district's "draft / pending" register. It rhymes with the `document-draft-banner` (the masthead-level draft signal); both signal pre-approval state, both use the warning palette without going full red, both pair with the attestation block's `.is-pending` state. The reader learns: warm-amber-dashed = "this isn't final yet."
+  - **Per-SoP cadence.** No cap. A draft might have 0 review-markers (close to ship) or 10 (early-stage). The marker's visibility makes high counts self-evident; restraint is enforced by the approval gate (markers must be resolved before sign-off), not by directive count.
+  - **Dual-surface parity.** HTML dashed + DOCX solid is an acceptable divergence: Google Docs renders solid paragraph borders cleanly; dashed borders fragment on round-trip. Both surfaces preserve the amber-700 + amber-50 register; the dashed-vs-solid is a cosmetic detail the brand can absorb.
+  - **Strip-before-ship.** Every review-marker in source markdown should be removed (along with its question being answered into the relevant procedure) before the SoP transitions to operational state. The chrome makes leftover markers visible on quick visual scan; the approval gate (attestation sign-off) is what enforces the removal. Source incident: 2026-06-07 UX-panel review of Care Coordinator SoP found `[NEEDS / CONFIRM]` markers rendering as inline `<code>` inside binding clinical instructions — Content Design + Plain Language Positioning both flagged block-tier risk to Marrero's read.
 
 ---
 
@@ -209,7 +221,7 @@ What this vocabulary asserts about the brand on the docx surface, taken as a sys
 
 5. **The 240-twip indent on `glossary-def` matches the blockquote indent.** This means a glossary definition and a blockquote will visually align at the same left edge. That's accidental coherence (both happen to use the same indent value because both are inheritable from the same border-indent pattern) and acceptable — both are "slightly-inset content" registers. Worth confirming on render that the alignment reads as intentional rather than as a markup error.
 
-6. **The placeholder `callout-warning` entry at lines 394–401 of `generate-references.py` was authored before this spec.** Aaron applies the drop-in block in section 7 below in its place. The visual contrast between the placeholder (`#a8420c` / `#fef3e2` — high-saturation diagnostic amber) and this spec's `callout-warning` (`#aa8232` border / `#f8f1e3` bg — restrained brand amber) is what the swap will be visually obvious on. If Marrero's first review opens against the placeholder amber rather than the spec's restrained amber, the swap has not landed and the wrong build was distributed.
+6. **The placeholder `alert-warning` entry at lines 394–401 of `generate-references.py` was authored before this spec.** Aaron applies the drop-in block in section 7 below in its place. The visual contrast between the placeholder (`#a8420c` / `#fef3e2` — high-saturation diagnostic amber) and this spec's `alert-warning` (`#aa8232` border / `#f8f1e3` bg — restrained brand amber) is what the swap will be visually obvious on. If Marrero's first review opens against the placeholder amber rather than the spec's restrained amber, the swap has not landed and the wrong build was distributed.
 
 ---
 
@@ -226,14 +238,14 @@ Replace lines 394–401 of `/Users/aaronsleeper/Vaults/.claude/config/drive-them
     # haven-directive-styling.md.
     "directive_styles": {
         # --- Callouts: severity ramp on the functional palette ---
-        "callout-info": {
+        "alert-info": {
             # cyan-500 border on cyan-50 bg — informational register, lowest severity
             "border_color": "#236b8f",  # cyan-500
             "bg_color":     "#d2f2fa",  # cyan-50
             "space_before": Pt(8),
             "space_after":  Pt(8),
         },
-        "callout-warning": {
+        "alert-warning": {
             # amber-500 border on amber-50 bg — pay attention, brand-restrained
             # (replaces the diagnostic placeholder #a8420c / #fef3e2 from the
             # 2026-05-28 round-trip test)
@@ -242,7 +254,7 @@ Replace lines 394–401 of `/Users/aaronsleeper/Vaults/.claude/config/drive-them
             "space_before": Pt(8),
             "space_after":  Pt(8),
         },
-        "callout-success": {
+        "alert-success": {
             # green-500 border on green-50 bg — desaturated success per Cena
             # functional palette (distinct from sage, which is brand-identity)
             "border_color": "#2c845c",  # green-500
@@ -250,7 +262,7 @@ Replace lines 394–401 of `/Users/aaronsleeper/Vaults/.claude/config/drive-them
             "space_before": Pt(8),
             "space_after":  Pt(8),
         },
-        "callout-error": {
+        "alert-error": {
             # red-500 border on red-50 bg — critical risk; warm-shifted red,
             # not candy-red. Distinct from escalation (which is "what to do
             # when something already broke")
@@ -289,7 +301,7 @@ Replace lines 394–401 of `/Users/aaronsleeper/Vaults/.claude/config/drive-them
         },
 
         # --- Process-critical: SoP-load-bearing structural blocks ---
-        "attestation": {
+        "attestation-block": {
             # Highest brand weight. Lora type + sand-100 bg (warmer than card)
             # + sand-300 border (matches theme border_color). The block where
             # the SoP becomes operational.
@@ -310,7 +322,7 @@ Replace lines 394–401 of `/Users/aaronsleeper/Vaults/.claude/config/drive-them
         },
         "escalation": {
             # Routing rule with safety weight — between warning and error.
-            # amber-700 rule (darker than callout-warning's amber-500) on
+            # amber-700 rule (darker than alert-warning's amber-500) on
             # sand-50 bg (warm ground). "Infrastructure providing the route."
             "border_color": "#735311",  # amber-700
             "bg_color":     "#fbfaf8",  # sand-50
@@ -368,11 +380,11 @@ After replacing the dict and running `python3 generate-references.py`:
 - [ ] Render a test markdown (any SoP source with all directive types) via pandoc → docx
 - [ ] Upload to Google Drive, open in Google Docs
 - [ ] Visually confirm each directive's treatment matches its section above:
-  - [ ] callout-warning: amber-on-cream paragraph rectangle with amber left rule (NOT the diagnostic-bright placeholder amber)
-  - [ ] callout-info, success, error: matching severity-ramp treatment per their families
+  - [ ] alert-warning: amber-on-cream paragraph rectangle with amber left rule (NOT the diagnostic-bright placeholder amber)
+  - [ ] alert-info, success, error: matching severity-ramp treatment per their families
   - [ ] card / card-title / card-body: subtle warm bg, no left rule, Lora title in teal-700
   - [ ] attestation: warmer sand-100 bg, sand-300 left rule, Lora type
-  - [ ] escalation: amber-700 left rule on sand-50 bg (NOT same as callout-warning)
+  - [ ] escalation: amber-700 left rule on sand-50 bg (NOT same as alert-warning)
   - [ ] decision-branch: sand-300 left rule on sand-50 bg (neutral, structural)
   - [ ] glossary-term: bold term followed by definition; reads as definition list
 - [ ] Quiet-mode check: scroll through the rendered SoP with eyes unfocused. The page should still feel like Haven (warm ground, Lora headings, Source Sans body). Directives should read as *moments*, not as a tiled pattern.
