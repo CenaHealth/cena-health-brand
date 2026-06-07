@@ -5,6 +5,7 @@ scope: project
 projects: [Cena Health]
 created: 2026-04-16
 last_verified: 2026-04-16
+practice: brand
 ---
 
 ## Essential briefing
