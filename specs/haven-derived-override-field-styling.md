@@ -113,4 +113,52 @@ After the variant ships in `components.css` + `form-derived-override.html` and t
 
 ## Source
 
+## 7. Addendum (2026-06-18) — table-cell composition (`.field-derived-override-cell`)
+
+Closes §5 item 2 ("Save button sizing in tight table cells") with the codified cell-context decision. The first canonical consumer (`clinical-meals-row`'s Override column in cap-63 kitchen-detail) reached the size question; this addendum names the brand call so future table-cell consumers inherit the contract rather than re-deriving.
+
+### 7.1 What the cell variant is
+
+Two additive class names. Neither replaces the standalone primitive — both compose with it:
+
+- **`.field-derived-override-cell`** — wrapper modifier applied alongside `.field-row-derived-override`. Drops the standalone primitive's `.field-row` vertical-stack shell (which provides `flex flex-col gap-1.5` and assumes a label-above-input arrangement) and supplies a compact `inline-flex items-center gap-1.5 justify-end flex-wrap` layout sized for a `cell-numeric` column. The input-group constrains to `w-28` (112px) so 6+ stacked rows align cleanly without the input absorbing the cell's full width. Helper line and error line span the cell's full width below the input + Save, right-aligned to match the column's numeric register.
+- **`.field-derived-save-sm`** — size-compact modifier applied alongside `.field-derived-save` (which still composes `btn-primary`). Reduces vertical padding (`px-3 py-1.5 text-sm`) so the Save button fits the table-row's height while preserving btn-primary's teal-700 fill and white text contract.
+
+### 7.2 Why a cell variant earns codification (not a one-off composition)
+
+The shape — "field-row-derived-override packed into a `<td>` of a `cell-numeric` column" — recurs across cena-apps' staff surfaces:
+
+- Meals catalog Override column (cap-63, the canonical first consumer)
+- Future program-level fee override tables (when admin surfaces grow per-program overrides)
+- Future per-patient meal-plan custom-target tables (when patient profile gains per-meal calorie overrides)
+
+The structural decisions (drop the .field-row shell, constrain the input-group width, right-align the helper, compact the Save) are not data-driven — they're the same brand calls every time a derived-override row needs to fit a numeric column. Codifying as a named wrapper means future consumers reach for the class rather than re-litigating the layout. Sibling pattern to the form family's existing `.field-row-horizontal` modifier — same shape (alternate layout for a non-default container context), different context.
+
+### 7.3 Brand decisions inside the cell variant
+
+The cell variant inherits §4's cross-cutting decisions unchanged (teal reserved for state-changing commits, in-input affordances stay sand-neutral, the derived helper inherits `field-help`'s register). The cell-context decisions added here:
+
+- **The helper drops below the input-group + Save, full-cell-width, right-aligned.** Default behavior in the standalone primitive is the helper sits in the `field-row`'s third column-stacked slot. In a cell, the helper goes to a flex-wrapped second line, still in `field-help`'s `text-xs text-sand-600` register, but right-aligned (`text-end justify-end`) so it visually anchors to the column's numeric column. This protects the column's overall right-aligned read; pulling the helper to the left would let the cell read as "two competing alignments" and break the table's vertical-rhythm scan.
+- **The Save uses `field-derived-save-sm` (compact), not the default footprint.** The default `btn-primary` (h-11 in haven's standard density) dominates a 56–64px-tall table row and forces the row to grow vertically. The compact modifier brings the button to ~36px, which sits cleanly in the row's existing height without inflating it. The btn-primary teal-700 fill and white text are preserved — the compact modifier is sizing-only, not a color reduction, so the Save's "this row has a commit pending" punctuation reads the same as in the standalone form context.
+- **The error message slot is empty-by-default and surfaces only under `data-state="error"`.** The standalone primitive renders the error inline in the same slot as the helper (one occupies, the other is hidden); the cell variant uses a separate empty `<p data-field="override-error-message">` that the renderer fills under error state and the CSS hides under other states. This protects the cell's vertical rhythm — the row reserves no space for a never-shown error line in the dominant empty/dirty/saved states.
+
+### 7.4 Quality-test addendum
+
+In addition to §6's validation checklist:
+
+- [ ] A meals catalog with 6 rows where 4 are empty and 2 are saved reads as one continuous numeric column with the Override slot's affordances staying inside the row height — no row visibly taller than another
+- [ ] The dirty state's Save button sits at compact size (~36px); the column's vertical rhythm is preserved
+- [ ] The helper line in empty state right-aligns to match the column's `text-end` register (no left-shifted helper)
+- [ ] Inline-flex wrap behavior: when the cell width compresses (narrow viewports), the input-group + Save stay on one line and the helper wraps below; nothing horizontally overflows the column
+- [ ] No new typography weights or sizes introduced — the cell variant reuses `field-help`'s text-xs and btn-primary's type contract verbatim
+
+### 7.5 What's not in the cell variant
+
+- No state-color border treatment on the input (saved doesn't add a green border; dirty doesn't add a teal border). The cell variant inherits the standalone primitive's state semantics — affordance visibility carries the state, not the input border (except in error, which keeps `field-row-error`'s red border per the standard family treatment).
+- No animated state transitions (no CSS keyframe flashes on save success — that visual is reserved for the `field-row-inline-edit` family per its brand spec's distinct contract). The cell variant's state changes are instantaneous attribute swaps, leaving any animation work for the consumer's JS module.
+
+---
+
+## Source
+
 2026-06-17: Haven Steward dispatch — codification slice for the derived-with-override + reset + adjacent-save input pattern. First-class consumer is the cena-apps internal-app Kitchen detail Meals catalog Override column (cap-34 / cap-63). Companion artifacts: PL fragment in [`Lab/haven-ui/packages/design-system/pattern-library/components/form-derived-override.html`](../../haven-ui/packages/design-system/pattern-library/components/form-derived-override.html); CSS in [`Lab/haven-ui/packages/design-system/src/styles/tokens/components.css`](../../haven-ui/packages/design-system/src/styles/tokens/components.css); COMPONENT-INDEX rows in [`Lab/haven-ui/packages/design-system/pattern-library/COMPONENT-INDEX.md`](../../haven-ui/packages/design-system/pattern-library/COMPONENT-INDEX.md); consumer-surface reference in [`Lab/cena-apps/src/docs/Internal App/wireframes.md`](../../cena-apps/src/docs/Internal%20App/wireframes.md) "Components needed but possibly missing entirely from the PL" section. Codification rule: [`.claude/rules/haven-primitive-codification.md`](../../../.claude/rules/haven-primitive-codification.md). Source incident: cena-apps `clinical-meals-row` shipped V0 with Override column as plain text + the interactive shape deferred (Gate 4 deferred in the meals manifest); follow-on Kitchen detail wireframe (cap-63) re-surfaced the same shape, escalating to a Haven Steward dispatch before Phase 4 emit per `generative-determinism.md`'s shape trigger.
