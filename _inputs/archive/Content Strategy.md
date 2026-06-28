@@ -6,7 +6,7 @@ Your main competitors each have distinct positioning strategies:
 
 ## **Your Unique Positioning Opportunity**
 
-VozCare/MLC Nutrition has a differentiated position combining:
+Cena Health has a differentiated position combining:
 
 - **Clinical integration** (like Geisinger) with **care coordination platform** (unique)
 - **AI-powered personalization** (like Aduro) with **cultural relevance** (like NourishedRx)
@@ -34,7 +34,7 @@ Unlike competitors who focus on single audiences, your site needs to serve:
 
 ### **1. Platform Overview**
 
-- VozCare + AVA + MLC Nutrition integrated stack
+- AVA + Cena Health integrated stack
 - Clinical evidence and ROI data (competitors emphasize this heavily)
 - Cultural competency and health equity focus
 
