@@ -151,6 +151,20 @@ When frozen visual states are needed for documentation (hover, focus, active), a
 - Never use `localStorage`, `sessionStorage`, or any Web APIs that require permissions
 - Keep JS minimal — the pattern library is documentation, not a product
 
+### Dummy copy — required for all placeholder text
+
+All placeholder text must come from `.project-docs/dummy-copy.md`. Do not invent
+names, conditions, stats, or filler copy.
+
+- The canonical primary patient is **Maria Rivera** (Type 2 Diabetes, Mediterranean Diet,
+  MRN PT-2024-0847, enrolled January 2025). Use her for any single-patient context.
+- For tables and data grids, use the full patient list from `dummy-copy.md`.
+- For provider names, use the canonical provider list from `dummy-copy.md`.
+- **No Lorem ipsum.** It is banned. Use the Cena Health medium paragraph block
+  from `dummy-copy.md` for any body-text placeholder need.
+- The "James Chen" collision (patient + CMO) is known. Use him only as a provider
+  in new components.
+
 ### Forbidden in component HTML files
 
 - Raw hex values (e.g. `color: #0D322D`) — use CSS custom properties
