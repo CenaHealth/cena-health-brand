@@ -207,6 +207,13 @@ The active link uses **`aria-current="page"` as the binding** + a visual treatme
 - **The codification slice MUST author the collapse markup in the PL fragment** — including the `<button class="surface-nav-toggle">` for hamburger affordance + the `aria-expanded` binding for the collapsed-state expand/collapse + the focus-trap discipline when the menu is open (focus traps inside the expanded list; Esc closes; click-outside closes). These are render-pipeline contracts the codification slice owns; this spec authors the visual treatment.
 - **Hamburger glyph** — `fa-bars` (haven icon canon, FA Pro v7); same `btn-icon` register as the help affordance per §2.4 (outline-on-transparent, sand-700, 44×44 touch target).
 
+#### 3.3.6 Bound variants — `surface-nav-link-bound` + `surface-nav-link-active-bound`
+
+- **Purpose** — per-page peer-link binding inside `@slot: links`. Each consumer surface class (procedure-detail / landing / timeline / patient-journey) names its own peer-link set; the bound variants let the manifest emit those labels + hrefs without restating the surface-nav-link markup. Authored 2026-06-30 per Steward §6.1 dispatch (HVD round-5).
+- **Visual register — unchanged from §3.3.1 + §3.3.2.** Bound variants inherit the inactive and active treatments authored above; the binding contract is mechanical (`data-field="label"` for the link text, `{href}` for the anchor target). The `-active-bound` variant adds `aria-current="page"` per §3.3.2 — the only structural delta between the two bound variants is that one attribute.
+- **Composition shape** — the bound variants emit an `<li><a class="surface-nav-link">…</a></li>` pair (each-iterating directly into `surface-nav-links cluster` per the default exemplar's wrapping list). Mirrors the established `surface-rail-top-link-bound` precedent.
+- **Why bound + active-bound as two primitives, not one with conditional active.** The compose engine resolves a per-iteration active variant via `each.active-child-id` (mirrors the `nav-item-rail-row-bound` + `-active-bound` pair). Two named primitives keep the slot-fill mechanical; the manifest names the active-key field once, the engine swaps in the active markup for the matching iteration item.
+
 ### 3.4 `surface-footer`
 
 The footer closes the document. Sibling to `surface-banner` by family discipline (§2) at a smaller register. Composition order from left to right: brand mark (20px tall per §2.3) → copyright text → trailing help affordance (mirror of banner's per §2.4). Single horizontal row at default density; wraps gracefully on narrow viewports (the copyright line may break under the brand-mark on mobile if needed).
@@ -274,6 +281,36 @@ The rail's `<aside>` MAY carry its own slightly-warmer ground than the body's `b
 #### 3.5.5 Optional second variant — different keyboard cue
 
 The slot's `@slot: cue` is consumer-overrideable per Steward §2.3. Other keyboard affordances may use the same primitive — `? to open help`, `Esc to close`. The register stays the same; only the content changes. Future surfaces that surface a different cue inherit the visual treatment automatically.
+
+### 3.6 `surface-rail` — `@slot: filter-row` (consumer-bound aside-level controls)
+
+The `surface-rail` primitive (sibling to the rail-foot-keyboard-cue covered in §3.5; the rail itself is composed in the SoT-site shell, not authored as a chrome family member here) exposes an aside-level secondary-control slot between its top-links section and its stage accordion. The slot's role is "a single consumer-bound aside-level control region"; what fills it depends on the consumer surface class.
+
+- **For procedure-detail surfaces (cap-\* manifests)** — compose `nav-filter-pills-bound` to drive a single-select role filter (CC · RDN · Admin · Kitchen · MPH Student). The role filter scopes the visible cap rows by author/owner role.
+- **For landing / timeline / patient-journey surfaces** — compose `toolbar-search` by reference. The control is corpus search at the rail level (a sibling to the surface-nav's trailing toolbar-search).
+- **For surfaces that don't need a secondary control** — leave the slot empty; the default PL content (an honest disabled `toolbar-search`) is suppressed by the consumer override per the half-state-promises discipline.
+
+#### 3.6.1 Slot-name discipline — why `filter-row`, not `search`
+
+The slot was renamed from `@slot: search` to `@slot: filter-row` on 2026-06-30 per Steward §6.3 dispatch (HVD round-5 §6.3 + §8.2 cross-affordance synthesis). The rationale: per HVD §8.2, slot names describe the slot's *role*, not the slot's first-instance content. The `search` name baked the original first-instance content (a toolbar-search) into the slot's identity; the role of the slot is broader (a single aside-level secondary control, which may be search OR a filter OR a future bound primitive yet to be authored).
+
+`filter-row` is not strictly perfect either (it now names the *other* dominant first-instance content — the role filter). The candidate considered + rejected: `controls` (genuine role-level name, neutral between search + filter + future). The call: `filter-row` won the rename because (a) the SoT-site's dominant consumer class is procedure-detail surfaces (every cap-\* manifest), and (b) `filter-row` is more concrete than `controls` for a manifest author reaching for the right primitive at the right slot. Future altitude shift to `controls` is reversible if a third orthogonal first-instance content emerges (the slot rename itself was a zero-migration change — no existing consumer overrode `@slot: search` before the bound-variant machinery existed; the same will be true at the time of any future rename).
+
+The CSS wrapper class `.surface-rail-search` was deliberately NOT renamed in this dispatch. The wrapper class owns the styled padding/layout for the slot's content, and renaming it requires components.css edits + any future consumer cleanup. The slot name is the primary discovery surface for manifest authors (it appears in the PL fragment's `@slot:` marker, which is what `compose.mjs` reads); the CSS class is the styling layer's internal detail. Splitting them is a one-time inconsistency that future styling-class follow-up can close (a `.surface-rail-controls` rename is queued as a Steward observation; not blocking).
+
+#### 3.6.2 Default content — the honest-not-yet pattern
+
+The PL exemplar's default content for `@slot: filter-row` is an `input type="search"` with `disabled` and placeholder "Search — coming in a later slice". This is the half-state-promises.md honest pattern: a consumer who composes `surface-rail` without overriding the slot inherits a visibly-not-yet affordance rather than a half-state promise (a search box that *appears* wired but does nothing).
+
+When the consumer overrides the slot with a real control (the bound nav-filter-pills, or a wired toolbar-search), the default content is replaced. The override path is mechanical via `compose.mjs`'s slot-fill engine.
+
+### 3.7 `nav-filter-pills` — bound variants for `@slot: filter-row`
+
+The `nav-filter-pills` primitive (codified separately at `pattern-library/components/nav-filter-pills.html`) is the canonical "single-select category filter" affordance across haven. The Steward §6.3 dispatch (2026-06-30) added bound variants — `nav-filter-pills-bound` (the wrapper, exposing `@slot: pills`) + `filter-pill-bound` (the per-pill iterator) — for data-bound composition inside `surface-rail.@slot: filter-row` and any future patient-list / alert-list / meal-list filter consumer.
+
+The bound variants do NOT change the visual treatment; `.filter-pill` + `.filter-pill.active` register stays canonical. The bound variant's active-state binding uses `[data-active="true"]` (mirroring `.filter-pill.active` via a union selector in `components.css`); the manifest's bind contract for the active field is `bind: { active: "selected" }` where the content's `selected` field carries `"true"` or `"false"`. This pairs the static-exemplar path (the `.active` class on a hand-authored pill) with the bound-iteration path (the `data-active` attribute on an each-emitted pill) under one visual register.
+
+The `.nav-filter-pills` semantic wrapper class was added 2026-06-30 (it had previously been a utility-soup `flex flex-wrap gap-2` inline on the default exemplar's parent div). The bound wrapper variant uses this semantic class so consumers compose against a named primitive rather than utility soup, per the haven-ui authoring discipline.
 
 ## 4. Accessibility floor (shared)
 
