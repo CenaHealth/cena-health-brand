@@ -395,15 +395,19 @@ The `procedure-mode-toggle` primitive extends the nav family — visually it inh
 
 **Why 2 seconds:** longer reads as urgent; shorter doesn't give AT users time to hear the announcement. 2 seconds matches existing Haven toast conventions.
 
-### Mobile compact (≤480px) — icon-only with mortarboard + checklist glyphs
+### Mobile compact (≤480px) — text labels PERSIST; spacing tightens + group wraps
 
-**Failure shape it resolves:** at 320px (iPhone SE floor), two text chips ("Training" + "Execution") + helper line + toast region compete for horizontal + vertical space against the title + kv-row + breadcrumb + approval badge + print icon. Full-text chips overflow.
+**Revised 2026-07-04** (Steward cap-03 round-5 §DEFECT 3, slot-30 cold render §6 + brief Q4). The prior resolution compacted the chip group to icon-only (mortarboard + checklist glyphs, label visually clipped). That was retired: an icon-only mode-switch for **unfamiliar** modes (Training / Execution are not universally-recognized glyphs) fails the affordance contract and violates Haven's plain-language-first voice — a staff user on mobile saw two unlabeled square icons and had to guess. Labels now persist at every viewport.
 
-**Resolution:** ≤480px compacts the chip group to icon-only — Training = mortarboard glyph (`fa-solid fa-graduation-cap`); Execution = checklist glyph (`fa-solid fa-list-check`). Glyphs chosen for plain-language read: the mortarboard is the canonical "learning/training" symbol; the checklist is the canonical "stepwise execution" symbol. Tooltips via `[aria-label]` carry the full text for hover/focus + AT.
+**Failure shape it resolves:** at 320px (iPhone SE floor), two text chips ("Training" + "Execution") + helper line + toast region compete for horizontal + vertical space against the title + kv-row + breadcrumb + approval badge + print icon.
 
-**Touch target floor maintained:** chip padding ensures ≥44×44px touch target even with the label visually hidden. The label stays in the DOM (visually clipped via sr-only positioning) so AT reads the accessible name.
+**Resolution:** ≤480px keeps each chip as **icon + text label** (the mortarboard `fa-solid fa-graduation-cap` and checklist `fa-solid fa-list-check` glyphs remain as leading icons, NOT as the whole affordance). Spacing tightens (chip padding + reduced gap) and the chip group is allowed to `flex-wrap` — if both labeled chips can't sit side-by-side at the narrowest widths, they stack rather than shedding their words. The plain-language read comes from the visible text, not the glyph.
+
+**Touch target floor maintained:** chip padding ensures ≥44×44px touch target with the label visible.
 
 **Why not collapse to a dropdown:** a single trigger + dropdown loses the location-reservation discipline — both chips need to remain visible so slice 2's wiring change is symmetric on mobile.
+
+**Why not icon-only:** Haven is plain-language-first. Icon-only is acceptable only for universally-recognized affordances (search magnifier, hamburger, close ×); a two-mode domain-specific switch is not one. When space is tight, wrap the words — never hide them.
 
 ### Anti-patterns to watch for
 
