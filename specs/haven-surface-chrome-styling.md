@@ -312,6 +312,19 @@ The bound variants do NOT change the visual treatment; `.filter-pill` + `.filter
 
 The `.nav-filter-pills` semantic wrapper class was added 2026-06-30 (it had previously been a utility-soup `flex flex-wrap gap-2` inline on the default exemplar's parent div). The bound wrapper variant uses this semantic class so consumers compose against a named primitive rather than utility soup, per the haven-ui authoring discipline.
 
+### 3.8 `surface-rail-stage-group` — native-disclosure stage register + `--aside` group-kind variant
+
+The rail's stage groups collapse/expand via **native `<details>/<summary>`** (site-shell effort 2, D2, 2026-07-04 — was Preline `hs-accordion`). The visual register is unchanged from the prior accordion; the substrate swap is behavior-only (native disclosure buys keyboard + AT + no-JS and drops the rail's Preline dependency). Two visually-weighted decisions are recorded here.
+
+**Stage-toggle chevron (aligned to `app-sidebar-nav`).** The `<summary class="surface-rail-stage-toggle">` strips the native disclosure marker (`list-style: none` + `::-webkit-details-marker { display: none }`) and carries its own trailing chevron via `::after`:
+
+- **Glyph + color** — `content: "▾"`, `var(--color-sand-500)`, `0.6875rem` — the quiet sand-500 register the rail's idle text lives in; the chevron is a wayfinding cue, not an accent.
+- **Rotation** — `rotate(-90deg)` closed (points right) → `rotate(0deg)` when the `<details>` is `[open]` (points down). This is the **exact** treatment `app-sidebar-nav summary::after` uses — one chevron language across both the app-shell sidebar and the doc-surface rail, so a reader who knows one knows the other.
+- **Placement** — trailing (flex `order: 3`, after the stage count), so the visual order is `[title] … [count] [chevron]`.
+- **Motion** — `transition: transform 120ms ease`, removed under `prefers-reduced-motion: reduce`.
+
+**`--aside` group-kind variant (`data-group-kind="aside"`).** A reusable set-aside bucket for groups the rail wants visually separated from the main stage flow — Phase-2 backlog, deprecated, draft. It carries a **quiet separator**: `border-top: 1px solid var(--color-sand-100)` + `padding-top: 0.75rem` + `margin-top: 0.5rem`, with `color: var(--color-sand-700)` (one step quieter than the sand-800 stage-toggle idle). This is the **exact** treatment the retired `surface-rail-backlog` member owned (site-shell effort 2, item 3 — folded into this variant so future set-aside buckets compose for free, corpus-first). The sand-100 hairline stays in the family's "subtle, not loud" separator register (§2.1 — no 2px, no ground-shift). Contrast: sand-700 on the rail's sand-50/transparent ground clears WCAG AA comfortably (~5.9:1).
+
 ## 4. Accessibility floor (shared)
 
 The chrome family inherits the accessibility floor from [`Lab/cena-health-brand/CLAUDE.md`](../CLAUDE.md) and [DESIGN.md § motion / persona](../../haven-ui/DESIGN.md). This section names the chrome-specific applications.
