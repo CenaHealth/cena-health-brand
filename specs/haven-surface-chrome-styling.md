@@ -63,6 +63,8 @@ The Cena Health brand mark is the canonical haven logo asset — the combined wo
 
 **Verdict — vertical alignment, footer: brand mark center-aligns to the copyright baseline.** Single-line pairing; mark + copyright read as one horizontal unit.
 
+**Addendum 2026-07-16 (haven-pl-site 7b, R11 — mark-as-link):** when the banner mark is a home link (first instance: the PL site, where the linked mark is the sole home affordance), the link carries an explicit accessible name (`aria-label` on the anchor or alt on the mark image) independent of any adjacent site-label text, plus the §4.1 focus-visible ring; hover affordance must be perceivable (the mark is the only recovery path from deep leaf pages). Placement/sizing verdicts above are unchanged.
+
 **Verdict — horizontal padding from page edge: matches the body content's left padding** so the brand mark and the body's first column share a visual gutter (alignment IS the warmth — generous space exposing the warm ground per Decision heuristic #3). Token: `var(--space-6)` (24px) at default density, scaling to `var(--space-8)` (32px) at comfortable density via the parent surface's `data-density` cascade.
 
 ### 2.4 Help-affordance treatment
@@ -304,6 +306,14 @@ The PL exemplar's default content for `@slot: filter-row` is an `input type="sea
 
 When the consumer overrides the slot with a real control (the bound nav-filter-pills, or a wired toolbar-search), the default content is replaced. The override path is mechanical via `compose.mjs`'s slot-fill engine.
 
+#### 3.6.3 Third canonical fill — the wired tree-filter (`rail-tree-filter`)
+
+Added 2026-07-16 (haven-pl-site 7b, R2 — panel-ratified; brand-fidelity seat register verdict). For rail consumers whose rail IS a large taxonomy tree (the PL site: 42 groups / ≈262 leaves), the slot's third canonical fill is a **wired free-text tree-filter** — `rail-tree-filter` (labelled `type="search"` input + debounced filter-with-force-open + `aria-live` match count + in-region empty state + clear affordance; behavior contract in the PL fragment's meta).
+
+- **Register: quiet tool chrome, not app search.** The input inherits the field register (white field, 1px sand-300 border, `radius-md`(5px-class field radius via `rounded-md` field convention), `text-sm`), sits on the rail's transparent/sand-50 ground, and carries no icon badge, no kbd cue, no elevation — it is rail infrastructure, visually quieter than `toolbar-search`'s corpus-search treatment (§3.3.3). The count/empty line renders in the caption register (`text-xs` sand-600).
+- **Distinct from the other two fills.** `nav-filter-pills-bound` = single-select categorical; `toolbar-search` = corpus search affordance; `rail-tree-filter` = free-text scoping of the rail's own tree. A consumer picks by job, per specificity-first.
+- The retired PL-site-local `pl-nav-filter` / `pl-nav-filter-empty` classes are this fill's predecessors — retired into it 2026-07-16 (the ds-binding R9-raise landing done right).
+
 ### 3.7 `nav-filter-pills` — bound variants for `@slot: filter-row`
 
 The `nav-filter-pills` primitive (codified separately at `pattern-library/components/nav-filter-pills.html`) is the canonical "single-select category filter" affordance across haven. The Steward §6.3 dispatch (2026-06-30) added bound variants — `nav-filter-pills-bound` (the wrapper, exposing `@slot: pills`) + `filter-pill-bound` (the per-pill iterator) — for data-bound composition inside `surface-rail.@slot: filter-row` and any future patient-list / alert-list / meal-list filter consumer.
@@ -325,14 +335,25 @@ The rail's stage groups collapse/expand via **native `<details>/<summary>`** (si
 
 **`--aside` group-kind variant (`data-group-kind="aside"`).** A reusable set-aside bucket for groups the rail wants visually separated from the main stage flow — Phase-2 backlog, deprecated, draft. It carries a **quiet separator**: `border-top: 1px solid var(--color-sand-100)` + `padding-top: var(--space-3)`, with `color: var(--color-sand-700)` (one step quieter than the sand-800 stage-toggle idle). This is the **exact** treatment the retired `surface-rail-backlog` member owned (site-shell effort 2, item 3 — folded into this variant so future set-aside buckets compose for free, corpus-first). The sand-100 hairline stays in the family's "subtle, not loud" separator register (§2.1 — no 2px, no ground-shift). Contrast: sand-700 on the rail's sand-50/transparent ground clears WCAG AA comfortably (~5.9:1). **The private `margin-top: 0.5rem` was removed 2026-07-05 (site-shell round-2 R6, gap-over-margin):** the group's separation from the element above is owned by the *parent container's gap* (the rail foot / stages flex-gap), not a private margin — the prior margin-top stacked on the foot section's own border+padding producing a double-border inset. Pinned by the `aside-group-no-layout-margin` contract assertion.
 
-### 3.9 `layout-sot-shell` — the SoT surface brand background
+### 3.9 `layout-surface-shell` — the doc-surface brand background
 
-The SoT shell wrapper carries its own **brand surface style** (site-shell round-2 R8 — a template owns brand-fidelity like a component, not just its children's layout; 7b codification-completeness brand-adherence). Two layers:
+> Renamed 2026-07-16 (haven-pl-site 7b, R7): `layout-sot-shell` → `layout-surface-shell` when the Pattern Library site became the shell's second consumer family. Alias trail per define-once; this section's treatment travels with the rename unchanged — it now governs BOTH the SoT site and the PL site (and any future doc-surface site composing the shell).
+
+The surface shell wrapper carries its own **brand surface style** (site-shell round-2 R8 — a template owns brand-fidelity like a component, not just its children's layout; 7b codification-completeness brand-adherence). Two layers:
 
 - **Neutral ground — `background-color: var(--color-sand-50)`** (`#FBFAF8`). The warm off-white is the surface's continuous ground from top to bottom; the chrome members (banner / nav / footer / rail) sit transparent on it per §2.1.
 - **Warm radial glow anchored at the surface bottom.** `background-image: radial-gradient(ellipse 80% 40% at 50% 100%, rgba(214, 158, 102, 0.06), transparent 70%)`, `background-repeat: no-repeat`, `background-attachment: fixed`. This is the brand's warm-ground signature (HVD Principle 3 — warm ground is the brand's essential mechanism) at **low intensity** (amber/sand at 6% opacity) so it reads as *warmth that grew*, not a decorative wash. Anchored at `50% 100%` (bottom-center) so a reader scrolling to the document's end lands on the warm anchor rather than a cold cut-off. `background-attachment: fixed` keeps the glow at the viewport bottom during scroll (a surface-level warmth, not a content-scroll element). Layered under the sand-50 ground, so text contrast against the reading column is unaffected (the glow sits behind content at ≤6% opacity; no contrast-pair regression).
 
 **Render-time verdict pending (HVD cold-look).** The exact glow **intensity + reach** (opacity, ellipse dimensions, whether `fixed` vs. `local` attachment reads best) is a render-time HVD cold-look item, tracked with decision-sheet rows 4/5/6 (the deferred visual items on the rebuilt cap-03). The spec-side proposal ships the restrained version first (6% — the restraint slot); iteration path is *up* (8–10% / wider ellipse) only if the warmth reads as absent under partner review, *down/removed* only if it reads as a wash. The value is deliberately at the quiet end of the brand's warm-glow language (the tokens-comparison surface uses 22–35% amber for a demonstrative swatch — the *surface* register is an order of magnitude quieter).
+
+### 3.10 `family-tile` — landing family-map tile (haven-pl-site 7b, R9)
+
+New visually-weighted primitive, panel-ratified 2026-07-16 (place-3 entry; HVD render-time review flagged as follow-up). The landing family map communicates corpus **scale + coherence** visually (brief P5) — one tile shape, three discrete emphasis tiers by member count, matching the sitemap's own banding.
+
+- **Tier contract (`data-weight`):** `dominant` (10+ members) — 2-column grid span + `text-xl` name; `mid` (5–9) — 1 span + `text-base`; `tail` (1–4) — 1 span + `text-sm` name. Discrete tiers tied to real count thresholds, never continuous scaling — proportionally honest, no spatial lying (`hierarchy-by-contrast`).
+- **Tile register:** sand-50 ground, 1px sand-200 border, `radius-md` (11px card canon), no shadow (elevation-via-border discipline). Name = Source Sans 3 semibold sand-800; count line = `text-xs` sand-600. Hover = Quiet-Ground two moves exactly (sand-100 ground-shift + name darkens to sand-900); focus-visible ring per §4.1.
+- **A11y floor (panel-pinned):** heading LEVEL never varies by tier (visual weight ≠ document outline — tiles carry no internal headings by default); tail tier never drops below `text-sm`/AA contrast (sand-800 on sand-50 ≈ AAA).
+- **Known coupling (named, not hidden):** tier weight rides raw COMPONENT-INDEX category counts; near-duplicate categories misrepresent scale until the deposited canon-layer taxonomy normalization lands. The landing's J5 credibility is conditional on that upstream fix.
 
 ## 4. Accessibility floor (shared)
 
