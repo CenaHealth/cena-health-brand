@@ -720,7 +720,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: agree with your rationale. diagrams are more information-dense than icons given that they communicate multiple concepts as opposed to a pictogram representing a single concept. thicker strokes makes sense in this case in my opinion. %%
 
-%% @Claude 2026-05-09: 2.5:1 ratio confirmed in §3. No spec change. %%
+%% @Vault 2026-05-09: 2.5:1 ratio confirmed in §3. No spec change. %%
 
 ### Q2 — Color palette beyond teal/sage — RESOLVED, with scope expansion
 
@@ -728,7 +728,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: i'm interpreting "dark substrates" as rectangles containing text that have light text and dark surface. i'm reading your rationale as "we may want this option to highlight a single key element". i definitely agree with restraint here. i'm a fan of the adage "if everything screams, nothing screams" in reference to the fact that multiple high-contrast elements become a noisy pattern quickly instead of calling attention. this brings to mind the fact that color is often used as semantic information and given that we have a spectrum of colors as well as the ability to generate harmonious variants across arbitrary hues, i think we should have a wide enough set of options for colors and styles to allow designers options when designing diagrams based on the needs of what's being communicated. tldr: let's support more colors outside of teal and sand. %%
 
-%% @Claude 2026-05-09: §5 Color Language was substantially expanded. Six categorical color anchors (teal, sage, ochre, rose, violet, indigo) + warm-neutral default, each with semantic association, drawn from color.md §1.4 extended families. Added categorical-substrate variants (light-tinted only — dark stays teal-only per "if everything screams" rule). Added restraint table: max 4 anchors per diagram, max 1 dark substrate, max 3 categorical-substrate regions. §2.3 Pill expanded with corresponding color variants. %%
+%% @Vault 2026-05-09: §5 Color Language was substantially expanded. Six categorical color anchors (teal, sage, ochre, rose, violet, indigo) + warm-neutral default, each with semantic association, drawn from color.md §1.4 extended families. Added categorical-substrate variants (light-tinted only — dark stays teal-only per "if everything screams" rule). Added restraint table: max 4 anchors per diagram, max 1 dark substrate, max 3 categorical-substrate regions. §2.3 Pill expanded with corresponding color variants. %%
 
 ### Q3 — Pill default fill — RESOLVED, with expansion
 
@@ -736,7 +736,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: this system's purpose, like most design systems, is to provide brand-consistent options to support a wide spectrum of design possibilities. the constraining boundaries are: avoid having so many options that brand-consistency is lost or outputs start to look chaotic or random; avoid providing so few options that diagrams appear "one-note", like they're all the same, or that we lose the ability to communicate semantic concepts or group things by color. hopefully this makes sense. there's a balance we need to find here between not enough and too many options. right now my instinct is that we have not enough. %%
 
-%% @Claude 2026-05-09: §2.3 Pill restructured into geometry+typography (shared) and color variants (9 variants: default + 6 categorical + surface-dark + mono modifier). Default fill is `color-surface-secondary` (warm-200, `#E7E4DF`) per spec. Restraint enforced through §5's "max 4 anchors per diagram" rule. %%
+%% @Vault 2026-05-09: §2.3 Pill restructured into geometry+typography (shared) and color variants (9 variants: default + 6 categorical + surface-dark + mono modifier). Default fill is `color-surface-secondary` (warm-200, `#E7E4DF`) per spec. Restraint enforced through §5's "max 4 anchors per diagram" rule. %%
 
 ### Q4 — Marker size + curve quality — RESOLVED on size, OPEN on geometry
 
@@ -746,7 +746,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault clarification (sent during revision): the FigJam reference and pen-tool quality apply explicitly to **connecting lines between diagram elements** — i.e., connectors. Non-connective lines (illustrative or other purposes) should be considered separately. The first-step goal: demonstrate the system can draw nice brand-aligned connectors before extending to other line types. %%
 
-%% @Claude 2026-05-09: Three changes. (1) Marker size 10×10 confirmed in §4. (2) §2.4 Connector restructured: stroke spec, three permitted geometric forms (orthogonal / straight / curved), and a new "Curve quality" subsection that's the load-bearing detail. The curve-quality subsection scopes itself to connectors only, names the FigJam orthogonal-with-rounded-elbow treatment as the reference, and flags that the precise geometry needs designer review with brand-team-validated exemplars. (3) §4 Markers updated with a "provisional, pending designer review" caveat — the marker geometry will be re-authored as part of the connector geometry exercise so the two harmonize rather than being specified independently. **Still open:** designer-authored connector exemplars + FigJam reference examples Aaron offered. Sequencing per Aaron's clarification: connector exemplars first, before extending to other line types. %%
+%% @Vault 2026-05-09: Three changes. (1) Marker size 10×10 confirmed in §4. (2) §2.4 Connector restructured: stroke spec, three permitted geometric forms (orthogonal / straight / curved), and a new "Curve quality" subsection that's the load-bearing detail. The curve-quality subsection scopes itself to connectors only, names the FigJam orthogonal-with-rounded-elbow treatment as the reference, and flags that the precise geometry needs designer review with brand-team-validated exemplars. (3) §4 Markers updated with a "provisional, pending designer review" caveat — the marker geometry will be re-authored as part of the connector geometry exercise so the two harmonize rather than being specified independently. **Still open:** designer-authored connector exemplars + FigJam reference examples Aaron offered. Sequencing per Aaron's clarification: connector exemplars first, before extending to other line types. %%
 
 ### Q5 — Diagram caption typography (Lora Italic at 12px) — RESOLVED
 
@@ -754,7 +754,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: Let me see if i'm understanding correctly. Lora's letterforms are more detailed and so are less legible adjacent to Source Sans 3 at the same size. Also, we use Lora for headings which are typically not the same size as adjacent body copy. Given these assumptions, i agree that bumping Lora styles by +1 weight .... oh ... weight ... i understood size previously. well. bumping up weight i think still makes sense here. i don't understand the assertion that 12px is unusual for a given font. i know that 12px is not one of the canonical font-sizes in haven-ui but beyond that i'm not understanding why 12px is problematic. i think i'm missing something here. open to feedback / opinions. %%
 
-%% @Claude 2026-05-09: My "unusual at 12px" framing was muddled and not load-bearing. Spec is correct as written: Lora Italic 500 at 12px, color-text-secondary. The italic-weight-bump rule applies. No further spec change beyond removing the muddled hedging from this question's text. If a future review surfaces a real legibility concern at 12px, that's a separate issue to investigate with rendered exemplars. %%
+%% @Vault 2026-05-09: My "unusual at 12px" framing was muddled and not load-bearing. Spec is correct as written: Lora Italic 500 at 12px, color-text-secondary. The italic-weight-bump rule applies. No further spec change beyond removing the muddled hedging from this question's text. If a future review surfaces a real legibility concern at 12px, that's a separate issue to investigate with rendered exemplars. %%
 
 ### Q6 — Two-register modulation rule — RESOLVED
 
@@ -762,7 +762,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: no, not a hard rule. it's an idea that makes sense and exists in brand guidelines. the key is that it has yet to be implemented widely and so there's no basis yet for opinion on whether it's effective or just noise. at this point, i think we should follow the guideline and see how it goes. open to contrary opinions from our experts. %%
 
-%% @Claude 2026-05-09: §5 "Two-register modulation" softened from hard rule to default guidance. Added explicit working-hypothesis framing: as exemplars accumulate, the brand team will validate whether the modulation reads as helpful or as redundant. Until then, follow the default and flag forced-feeling cases. %%
+%% @Vault 2026-05-09: §5 "Two-register modulation" softened from hard rule to default guidance. Added explicit working-hypothesis framing: as exemplars accumulate, the brand team will validate whether the modulation reads as helpful or as redundant. Until then, follow the default and flag forced-feeling cases. %%
 
 ### Q7 — Boundary-table default for ambiguous cases — RESOLVED (question retired)
 
@@ -770,7 +770,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: i don't understand this question. %%
 
-%% @Claude 2026-05-09: The question itself was muddy. Retired. §7 closing language now defers to the §0 content-grain rule (story → §5.5; structure → this system; numbers → charts) for ambiguous cases. Captions clarify what a diagram is showing but don't change category. %%
+%% @Vault 2026-05-09: The question itself was muddy. Retired. §7 closing language now defers to the §0 content-grain rule (story → §5.5; structure → this system; numbers → charts) for ambiguous cases. Captions clarify what a diagram is showing but don't change category. %%
 
 ### Q8 — Animation — DEFERRED
 
@@ -778,7 +778,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: i love animation personally, just being transparent about my personal bias. with that said i am also of the strong opinion that animations can greatly reduce friction, improve attention as well as less tangible effects from a ux perspective. so in general defensible, right-sized animations for a use case would be well-received by me. but ... i think this is early. i do want to explore animation but at this stage we haven't even demonstrated that we can draw brand consistent assets. adding the complexity of animation on top of that feels premature at this moment. let's save this idea though and come back to it later. %%
 
-%% @Claude 2026-05-09: §8 (Animation) replaced with a deferred-section placeholder. The original animation rules (stroke draw-on, milestone state crossfade, hover elevation, reduced motion) are removed for now. Section reserved for future definition once: (a) static exemplars exist and are brand-validated, (b) iconography/illustration animation specs provide a base to extend, (c) a real motion need has surfaced from a working application. %%
+%% @Vault 2026-05-09: §8 (Animation) replaced with a deferred-section placeholder. The original animation rules (stroke draw-on, milestone state crossfade, hover elevation, reduced motion) are removed for now. Section reserved for future definition once: (a) static exemplars exist and are brand-validated, (b) iconography/illustration animation specs provide a base to extend, (c) a real motion need has surfaced from a working application. %%
 
 ### Q9 — AI-generated rejection rule — RETIRED
 
@@ -786,7 +786,7 @@ Aaron's read on the original 9 open questions, captured 2026-05-09. Each item sh
 
 %% @Vault: i don't understand the question. With that said "ai-generated" is not a success state we've reached so it seems difficult to decide whether review is needed and how to enforce it. we need review very much right now since we're iterating. once we can design the things we need and we've codified the generation process we will better understand the possible failure modes and can make a more defensible assessment on review necessity, shape, and enforcement strength / approach. %%
 
-%% @Claude 2026-05-09: The rejection-list entry "AI-generated without authoring review" was removed from §9. Premature — the brand has not reached a generation success state, so a review-policy rule is shadow-boxing. Will revisit when generation is operational and failure modes are observable. %%
+%% @Vault 2026-05-09: The rejection-list entry "AI-generated without authoring review" was removed from §9. Premature — the brand has not reached a generation success state, so a review-policy rule is shadow-boxing. Will revisit when generation is operational and failure modes are observable. %%
 
 ---
 
